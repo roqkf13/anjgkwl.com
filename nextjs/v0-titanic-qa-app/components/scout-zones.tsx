@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { SCOUT_GENRES } from "@/lib/scout-genres";
+import { SCOUT_GENRES } from "../v0-titanic-qa-app/lib/scout-genres";
 
 export function ScoutZones() {
   return (

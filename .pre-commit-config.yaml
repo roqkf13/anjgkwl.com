@@ -1,0 +1,80 @@
+# 하네스 엔지니어링 — 커밋 전 자동 검증
+#
+# 설치:
+#   pip install pre-commit
+#   pre-commit install
+#
+# 수동 실행:
+#   pre-commit run --all-files
+
+repos:
+  - repo: local
+    hooks:
+
+      # ── Python: abiswallow ────────────────────────────────────────────
+
+      - id: ruff-lint
+        name: "[abiswallow] Ruff — lint"
+        entry: ruff
+        args: [check, --fix, abiswallow]
+        language: system
+        pass_filenames: false
+        files: ^abiswallow/.*\.py$
+
+      - id: ruff-format
+        name: "[abiswallow] Ruff — format"
+        entry: ruff
+        args: [format, abiswallow]
+        language: system
+        pass_filenames: false
+        files: ^abiswallow/.*\.py$
+
+      - id: mypy
+        name: "[abiswallow] mypy — type check"
+        entry: python
+        args: [-m, mypy, --config-file, abiswallow/pyproject.toml, abiswallow]
+        language: system
+        pass_filenames: false
+        files: ^abiswallow/.*\.py$
+
+      - id: import-linter
+        name: "[abiswallow] import-linter — star topology"
+        entry: python
+        args: [abiswallow/scripts/run-lint-imports.py]
+        language: system
+        pass_filenames: false
+        files: ^abiswallow/.*\.py$
+
+      - id: validate-harness
+        name: "[abiswallow] MD 하네스 검증"
+        entry: python
+        args: [abiswallow/scripts/validate-harness.py]
+        language: system
+        pass_filenames: false
+        files: \.md$
+
+      # ── Next.js: www ──────────────────────────────────────────────────
+
+      - id: next-lint
+        name: "[www] ESLint"
+        entry: pnpm
+        args: [--dir, www/v0-titanic-qa-app, lint]
+        language: system
+        pass_filenames: false
+        files: ^www/.*\.(ts|tsx|js|jsx)$
+
+      - id: next-typecheck
+        name: "[www] TypeScript — type check"
+        entry: pnpm
+        args: [--dir, www/v0-titanic-qa-app, type-check]
+        language: system
+        pass_filenames: false
+        files: ^www/.*\.(ts|tsx)$
+
+      - id: next-format-check
+        name: "[www] Prettier — format check"
+        entry: pnpm
+        args: [--dir, www/v0-titanic-qa-app, format:check]
+        language: system
+        pass_filenames: false
+        files: ^www/.*\.(ts|tsx|js|jsx|json|css)$

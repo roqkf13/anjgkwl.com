@@ -1,0 +1,22 @@
+{
+  "proseWrap": "always",
+  "printWidth": 120,
+  "tabWidth": 2,
+  "singleQuote": false,
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "proseWrap": "always",
+        "printWidth": 120
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "printWidth": 80
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+fastapi
+python-multipart
+uvicorn[standard]
+sqlalchemy[asyncio]
+psycopg[binary]
+python-dotenv
+pandas
+scikit-learn
+google-generativeai
+passlib[bcrypt]
+bcrypt>=4.0.1,<5
+email-validator
+alembic
+sqlmodel

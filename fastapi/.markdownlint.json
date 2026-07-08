@@ -1,0 +1,28 @@
+{
+  "comment": "스타 토폴로지 하네스: MD 파일이 온톨로지 노드로서 올바른 구조를 갖도록 강제",
+
+  "default": true,
+
+  "MD001": true,
+  "MD003": { "style": "atx" },
+  "MD004": { "style": "dash" },
+  "MD007": { "indent": 2 },
+  "MD009": false,
+  "MD010": true,
+  "MD012": { "maximum": 1 },
+  "MD013": { "line_length": 120, "tables": false, "code_blocks": false },
+  "MD022": true,
+  "MD023": true,
+  "MD024": { "siblings_only": true },
+  "MD025": true,
+  "MD026": false,
+  "MD029": { "style": "ordered" },
+  "MD030": true,
+  "MD033": false,
+  "MD034": true,
+  "MD036": true,
+  "MD041": true,
+
+  "MD046": { "style": "fenced" },
+  "MD048": { "style": "backtick" }
+}

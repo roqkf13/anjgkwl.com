@@ -1,0 +1,130 @@
+services:
+  # 1. 백엔드 서비스 설정
+  backend:
+    build:
+      context: ./abiswallow  # abiswallow 폴더 안에 있는 Dockerfile을 사용해 빌드
+    restart: unless-stopped
+    ports:
+      - "8000:8000"          # 내 컴퓨터의 8000번 포트와 컨테이너의 8000번 포트 연결
+    volumes:
+      - ./abiswallow:/app    # 코드를 수정하면 컨테이너에도 바로 반영되도록 연동
+    env_file:
+      - ./abiswallow/.env    # 백엔드 환경변수 파일 로드
+    environment:
+      # env_file의 Neon DATABASE_URL을 로컬 pgvector 컨테이너로 오버라이드
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgvector:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://redis:6379
+      - NEO4J_URL=bolt://neo4j:7687
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+    depends_on:
+      pgvector:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+
+  # 2. n8n 워크플로우 자동화 서비스
+  n8n:
+    image: n8nio/n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - N8N_HOST=n8n.anjgkwl.com
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://n8n.anjgkwl.com/
+
+  # 1-1. Watson Test Harness (멀티 에이전트 라우팅 검증용, 1회성 실행)
+  #      실행: docker compose run --rm watson-harness
+  watson-harness:
+    build:
+      context: ./abiswallow
+    command: python apps/sherlock_homes/tests/harness/run_watson_harness.py
+    volumes:
+      - ./abiswallow:/app
+    env_file:
+      - ./abiswallow/.env
+    profiles:
+      - harness
+
+  # 2-1. Cloudflare Tunnel (n8n을 n8n.anjgkwl.com으로 공개)
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    restart: unless-stopped
+    volumes:
+      - ./cloudflared:/etc/cloudflared
+    depends_on:
+      - n8n
+
+  # 3. pgvector (PostgreSQL + 벡터 확장)
+  pgvector:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 4. Redis
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # 5. Neo4j 그래프 DB
+  neo4j:
+    image: neo4j:5-community
+    restart: unless-stopped
+    ports:
+      - "7474:7474"   # Browser UI
+      - "7687:7687"   # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD}
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  # 6. 프론트엔드 서비스 설정
+  frontend:
+    build:
+      context: ./www         # www 폴더 안에 있는 Dockerfile을 사용해 빌드
+    restart: unless-stopped
+    ports:
+      - "3000:3000"          # 내 컴퓨터의 3000번 포트와 컨테이너의 3000번 포트 연결
+    volumes:
+      - ./www:/app                                    # 코드를 수정하면 컨테이너에도 바로 반영되도록 연동
+      - /app/v0-titanic-qa-app/node_modules           # 컨테이너 안의 node_modules는 내 컴퓨터가 덮어쓰지 않게 보호
+    env_file:
+      - ./www/.env.local     # 프론트엔드 환경변수 파일 로드
+
+volumes:
+  n8n_data:
+  pgvector_data:
+  redis_data:
+  neo4j_data:

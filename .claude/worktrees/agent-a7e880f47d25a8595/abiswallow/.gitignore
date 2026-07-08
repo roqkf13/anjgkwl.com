@@ -1,0 +1,122 @@
+# ---------------------------------------------------------------------------
+# 비밀·자격증명 (GitHub에 올리면 안 되는 정보)
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+id_rsa
+id_ed25519
+secrets.json
+credentials.json
+serviceAccount*.json
+*-credentials.json
+.google-creds.json
+**/google-services.json
+.aws/credentials
+.aws/config.local
+.netrc
+.npmrc
+.yarnrc.yml
+auth.json
+token.txt
+*.token
+
+# ---------------------------------------------------------------------------
+# Cursor / IDE (로컬 MCP, 토큰, 머신별 설정)
+# ---------------------------------------------------------------------------
+.cursor/mcp.json
+.cursor/**/mcp.json
+.cursor/*.local.*
+.cursor/**/.agent-tools/**
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# 로그·로컬 DB·덤프
+# ---------------------------------------------------------------------------
+*.log
+logs/
+*.sqlite
+*.sqlite3
+*.db
+dump.rdb
+*.dump
+
+# ---------------------------------------------------------------------------
+# OS
+# ---------------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---------------------------------------------------------------------------
+# IDE (팀 공유 설정을 올리는 경우 아래 JetBrains 줄은 제거)
+# ---------------------------------------------------------------------------
+.idea/
+*.iml
+*.sublime-workspace
+*.code-workspace.local
+
+# ---------------------------------------------------------------------------
+# 기타 로컬 전용
+# ---------------------------------------------------------------------------
+*.local
+.cache/
+tmp/
+temp/
+apps/scout/data/patch_translations/
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json

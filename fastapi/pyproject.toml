@@ -1,0 +1,25 @@
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+exclude = ["alembic/versions/"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B"]
+ignore = [
+    "E501", # line-length: ruff format이 처리
+    "B008", # FastAPI Depends()처럼 default arg에 함수 호출 허용
+    "N805", # cls 첫 인자 이름 강제 — Pydantic validator와 충돌
+]
+
+[tool.ruff.lint.per-file-ignores]
+"alembic/*" = ["F401"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+exclude = ["alembic/"]

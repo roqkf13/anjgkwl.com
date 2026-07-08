@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ./v0-titanic-qa-app run dev",
+    "dev:turbo": "npm --prefix ./v0-titanic-qa-app run dev:turbo",
+    "build": "npm --prefix ./v0-titanic-qa-app run build",
+    "start": "npm --prefix ./v0-titanic-qa-app run start",
+    "lint": "npm --prefix ./v0-titanic-qa-app run lint"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
+  }
+}

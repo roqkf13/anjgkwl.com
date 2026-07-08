@@ -1,0 +1,9 @@
+tunnel: 0ba83c7b-6883-43da-9833-e84d5b01a807
+credentials-file: /etc/cloudflared/creds.json
+
+ingress:
+  - hostname: n8n.anjgkwl.com
+    service: http://n8n:5678
+  - hostname: api.anjgkwl.com
+    service: http://backend:8000
+  - service: http_status:404

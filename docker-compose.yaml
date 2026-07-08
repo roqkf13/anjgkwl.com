@@ -2,14 +2,14 @@ services:
   # 1. 백엔드 서비스 설정
   backend:
     build:
-      context: ./abiswallow  # abiswallow 폴더 안에 있는 Dockerfile을 사용해 빌드
+      context: ./fastapi  # fastapi 폴더 안에 있는 Dockerfile을 사용해 빌드
     restart: unless-stopped
     ports:
       - "8000:8000"          # 내 컴퓨터의 8000번 포트와 컨테이너의 8000번 포트 연결
     volumes:
-      - ./abiswallow:/app    # 코드를 수정하면 컨테이너에도 바로 반영되도록 연동
+      - ./fastapi:/app    # 코드를 수정하면 컨테이너에도 바로 반영되도록 연동
     env_file:
-      - ./abiswallow/.env    # 백엔드 환경변수 파일 로드
+      - ./fastapi/.env    # 백엔드 환경변수 파일 로드
     environment:
       # env_file의 Neon DATABASE_URL을 로컬 pgvector 컨테이너로 오버라이드
       - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgvector:5432/${POSTGRES_DB}
@@ -42,12 +42,12 @@ services:
   #      실행: docker compose run --rm watson-harness
   watson-harness:
     build:
-      context: ./abiswallow
+      context: ./fastapi
     command: python apps/sherlock_homes/tests/harness/run_watson_harness.py
     volumes:
-      - ./abiswallow:/app
+      - ./fastapi:/app
     env_file:
-      - ./abiswallow/.env
+      - ./fastapi/.env
     profiles:
       - harness
 
@@ -113,15 +113,15 @@ services:
   # 6. 프론트엔드 서비스 설정
   frontend:
     build:
-      context: ./www         # www 폴더 안에 있는 Dockerfile을 사용해 빌드
+      context: ./nextjs         # nextjs 폴더 안에 있는 Dockerfile을 사용해 빌드
     restart: unless-stopped
     ports:
       - "3000:3000"          # 내 컴퓨터의 3000번 포트와 컨테이너의 3000번 포트 연결
     volumes:
-      - ./www:/app                                    # 코드를 수정하면 컨테이너에도 바로 반영되도록 연동
+      - ./nextjs:/app                                    # 코드를 수정하면 컨테이너에도 바로 반영되도록 연동
       - /app/v0-titanic-qa-app/node_modules           # 컨테이너 안의 node_modules는 내 컴퓨터가 덮어쓰지 않게 보호
     env_file:
-      - ./www/.env.local     # 프론트엔드 환경변수 파일 로드
+      - ./nextjs/.env.local     # 프론트엔드 환경변수 파일 로드
 
 volumes:
   n8n_data:

@@ -6,4 +6,6 @@ ingress:
     service: http://n8n:5678
   - hostname: api.anjgkwl.com
     service: http://backend:8000
+  - hostname: ssh.anjgkwl.com
+    service: ssh://192.168.0.81:2022
   - service: http_status:404

@@ -30,10 +30,10 @@ from doro.app.doro_director import DoroDirector
 from friday13th.adapter.inbound.api.v1 import friday13th_v1_routers
 from friday13th.adapter.outbound.orm.user_model import Base as Friday13thBase
 from scout.adapter.inbound.api import scout_routers
-from sherlock_homes.adapter.inbound.api import sherlock_homes_router
-from silicon_valley.adapter.inbound.api import silicon_valley_router
-from silicon_valley.adapter.inbound.api.v1.piper_name_router import name_router
-from star_craft.adapter.inbound.api import vision_router
+from community.adapter.inbound.api import sherlock_homes_router
+from admin.adapter.inbound.api import silicon_valley_router
+from admin.adapter.inbound.api.v1.piper_name_router import name_router
+from ontology.adapter.inbound.api import vision_router
 from titanic.adapter.inbound.api import titanic_router
 
 AsyncSessionDep = Annotated[AsyncSession, Depends(get_db)]

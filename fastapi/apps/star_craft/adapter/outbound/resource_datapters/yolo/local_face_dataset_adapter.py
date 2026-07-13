@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from vision.app.ports.output.face_dataset_port import FaceDatasetPort
+from star_craft.app.ports.output.face_dataset_port import FaceDatasetPort
 
 DEFAULT_DATASET_ROOT = Path(__file__).resolve().parents[4] / "resources" / "yolo_train"
 

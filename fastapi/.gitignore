@@ -86,7 +86,7 @@ coverage.xml
 
 # YOLO/PyTorch 가중치 파일 (자동 다운로드됨)
 *.pt
-apps/vision/resources/yolo_train_runs/
+apps/star_craft/resources/yolo_train_runs/
 
 # ---------------------------------------------------------------------------
 # 로그·로컬 DB·덤프

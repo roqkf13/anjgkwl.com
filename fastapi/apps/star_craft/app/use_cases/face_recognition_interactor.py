@@ -4,9 +4,9 @@ from pathlib import Path
 
 from ultralytics import YOLO
 
-from vision.app.dtos.face_recognition_dto import FaceRecognitionResult
-from vision.app.ports.input.face_recognition_use_case import FaceRecognitionUseCase
-from vision.app.ports.output.face_dataset_port import FaceDatasetPort
+from star_craft.app.dtos.face_recognition_dto import FaceRecognitionResult
+from star_craft.app.ports.input.face_recognition_use_case import FaceRecognitionUseCase
+from star_craft.app.ports.output.face_dataset_port import FaceDatasetPort
 
 RUNS_DIR_NAME = "yolo_train_runs"
 RUN_NAME = "face_classifier"

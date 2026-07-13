@@ -33,8 +33,8 @@ from scout.adapter.inbound.api import scout_routers
 from sherlock_homes.adapter.inbound.api import sherlock_homes_router
 from silicon_valley.adapter.inbound.api import silicon_valley_router
 from silicon_valley.adapter.inbound.api.v1.piper_name_router import name_router
+from star_craft.adapter.inbound.api import vision_router
 from titanic.adapter.inbound.api import titanic_router
-from vision.adapter.inbound.api import vision_router
 
 AsyncSessionDep = Annotated[AsyncSession, Depends(get_db)]
 DatabaseHealthAdapterDep = Annotated[DatabaseHealthAdapter, Depends(get_db_health_adapter)]

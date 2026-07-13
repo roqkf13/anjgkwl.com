@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from pathlib import Path
 
-from vision.app.dtos.face_recognition_dto import FaceRecognitionResult
+from star_craft.app.dtos.face_recognition_dto import FaceRecognitionResult
 
 
 class FaceRecognitionUseCase(ABC):

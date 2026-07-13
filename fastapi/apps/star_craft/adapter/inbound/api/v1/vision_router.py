@@ -4,12 +4,12 @@ from pathlib import Path
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 
-from vision.adapter.inbound.api.schemas.vision_schema import (
+from star_craft.adapter.inbound.api.schemas.vision_schema import (
     FaceRecognitionResponseSchema,
     VisionUploadResponseSchema,
 )
-from vision.app.ports.input.face_recognition_use_case import FaceRecognitionUseCase
-from vision.dependencies.face_recognition_provider import get_face_recognition_use_case
+from star_craft.app.ports.input.face_recognition_use_case import FaceRecognitionUseCase
+from star_craft.dependencies.face_recognition_provider import get_face_recognition_use_case
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
 # apps/silicon_valley/adapter/inbound/mcp/piper_dunn_coo_tools.py
 from mcp.server.fastmcp import FastMCP
-from apps.silicon_valley.adapter.outbound.client.n8n_client import N8nClient
+from apps.admin.adapter.outbound.client.n8n_client import N8nClient
 
 # 1. MCP 서버 초기화
 mcp = FastMCP("myself")

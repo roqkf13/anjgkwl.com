@@ -84,7 +84,7 @@ def import_titanic_metadata():
     from core.matrix.gird_neo_theone_base import Base as TitanicBase
     from titanic.adapter.outbound.orm.passenger_rose_model_strategies import RoseModelOrm  # noqa: F401
     from titanic.adapter.outbound.orm.passenger_jack_trainer_orm import JackTrainerOrm  # noqa: F401
-    from sherlock_homes.adapter.outbound.orm.contact_orm import ContactOrm  # noqa: F401
+    from community.adapter.outbound.orm.contact_orm import ContactOrm  # noqa: F401
 
     return TitanicBase.metadata
 

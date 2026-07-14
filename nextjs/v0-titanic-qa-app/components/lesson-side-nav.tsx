@@ -23,6 +23,12 @@ const lessonNavSections = [
     hrefPrefix: "/lesson/vision",
     items: [{ href: "/lesson/vision", label: "1. 이미지 업로드" }],
   },
+  {
+    id: "rag",
+    label: "RAG 시스템",
+    hrefPrefix: "/lesson/rag",
+    items: [{ href: "/lesson/rag", label: "1. 문서 업로드 & 질의응답" }],
+  },
 ] as const;
 
 type LessonSideNavProps = {

@@ -1,5 +1,4 @@
-import { RagDocumentUploadPanel } from "@/components/rag-document-upload-panel";
-import { RagChatPanel } from "@/components/rag-chat-panel";
+import { RagPanel } from "@/components/rag-panel";
 
 export default function RagPage() {
   return (
@@ -7,8 +6,7 @@ export default function RagPage() {
       <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">
         Lesson · RAG 시스템
       </p>
-      <RagDocumentUploadPanel />
-      <RagChatPanel />
+      <RagPanel />
     </main>
   );
 }

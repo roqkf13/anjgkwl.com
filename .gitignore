@@ -58,6 +58,8 @@ eggs/
 .eggs/
 lib/
 lib64/
+# 위 lib/는 Python venv용 규칙이라 Next.js 소스 디렉터리(lib/)까지 잡아먹음 — 명시적으로 제외
+!nextjs/v0-titanic-qa-app/lib/
 parts/
 sdist/
 var/

@@ -16,6 +16,9 @@ services:
       - REDIS_URL=redis://redis:6379
       - NEO4J_URL=bolt://neo4j:7687
       - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+    extra_hosts:
+      # 네이티브 Linux Docker 엔진은 host.docker.internal을 자동 매핑하지 않으므로 명시
+      - "host.docker.internal:host-gateway"
     depends_on:
       pgvector:
         condition: service_healthy

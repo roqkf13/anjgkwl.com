@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from apps.star_craft.domain.ontology.spam.spam_category import SpamCategory
+from apps.ontology.domain.ontology.spam.spam_category import SpamCategory
 
 
 @dataclass(frozen=True)

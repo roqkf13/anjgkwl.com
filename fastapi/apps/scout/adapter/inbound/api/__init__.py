@@ -8,6 +8,7 @@ from scout.adapter.inbound.api.v1.scout_genre_router import scout_genre_router
 from scout.adapter.inbound.api.v1.scout_mod_router import scout_mod_router
 from scout.adapter.inbound.api.v1.scout_patch_note_router import scout_patch_note_router
 from scout.adapter.inbound.api.v1.scout_related_video_router import scout_related_video_router
+from scout.adapter.inbound.api.v1.scout_search_router import scout_search_router
 from scout.adapter.inbound.api.v1.soulslike_router import soulslike_router
 
 scout_routers = [
@@ -22,4 +23,5 @@ scout_routers = [
     scout_mod_router,
     scout_patch_note_router,
     scout_related_video_router,
+    scout_search_router,
 ]

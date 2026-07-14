@@ -1,5 +1,7 @@
 -- 실행 순서 1
 
+CREATE EXTENSION IF NOT EXISTS vector;
+
 CREATE TABLE stadium (
     stadium_id    VARCHAR(10) PRIMARY KEY,
     stadium_name  VARCHAR(40),
@@ -7,7 +9,8 @@ CREATE TABLE stadium (
     seat_count    INTEGER,
     address       VARCHAR(60),
     ddd           VARCHAR(10),
-    tel           VARCHAR(10)
+    tel           VARCHAR(10),
+    embedding     VECTOR(1536)
 );
 CREATE TABLE team (
     team_id       VARCHAR(50) PRIMARY KEY,
@@ -24,6 +27,7 @@ CREATE TABLE team (
     homepage      VARCHAR(100),
     owner         VARCHAR(50),
     stadium_id    VARCHAR(20),
+    embedding     VECTOR(1536),
     FOREIGN KEY (stadium_id) REFERENCES stadium(stadium_id)
 );
 CREATE TABLE schedule (
@@ -34,6 +38,7 @@ CREATE TABLE schedule (
     awayteam_id   VARCHAR(10),
     home_score    INTEGER,
     away_score    INTEGER,
+    embedding     VECTOR(1536),
     FOREIGN KEY (stadium_id) REFERENCES stadium(stadium_id),
     FOREIGN KEY (hometeam_id) REFERENCES team(team_id),
     FOREIGN KEY (awayteam_id) REFERENCES team(team_id)
@@ -52,6 +57,7 @@ CREATE TABLE player (
     height           INTEGER,
     weight           INTEGER,
     team_id          VARCHAR(10),
+    embedding        VECTOR(1536),
     FOREIGN KEY (team_id) REFERENCES team(team_id)
 );
 

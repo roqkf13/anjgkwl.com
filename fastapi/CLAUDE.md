@@ -142,6 +142,14 @@ alembic revision --autogenerate -m "설명"
 alembic upgrade head
 ```
 
+## 배포 환경 — 로컬 vs 원격 서버 `.env` 주의
+
+`.env`는 `.gitignore`에 포함되어 **git으로 동기화되지 않는다**. 로컬 Windows 머신의 `fastapi/.env`와 원격 서버(`ssh.anjgkwl.com`)의 `fastapi/.env`는 **완전히 별개의 파일**이다.
+
+- 로컬 `.env`에 값을 추가/수정해도 원격 서버에는 **자동 반영되지 않는다**. 브랜치 머지·PR과도 무관하다(애초에 git에 안 올라감).
+- 원격 서버 쪽 설정(예: `OLLAMA_MODEL` 값, Ollama에 어떤 모델이 설치돼 있는지)은 **가정하지 말고 그 세션에서 직접 SSH로 확인**한다. 로컬 세션의 기억과 원격 서버의 실제 상태는 다를 수 있다.
+- 원격 서버는 `docker-compose.yaml`의 `backend` 서비스가 `env_file: ./fastapi/.env`로 값을 읽는다. `.env`를 바꿔도 **컨테이너를 재시작(재빌드)하기 전까지는 반영되지 않는다** — 재기동 후 실제로 반영됐는지 확인한다.
+
 ## 컨벤션
 
 - 새 앱은 `apps/` 아래 헥사고날 구조로 추가하고 `main.py`에 라우터 등록.

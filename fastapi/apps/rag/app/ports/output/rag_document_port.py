@@ -13,6 +13,6 @@ class RagDocumentPort(ABC):
 
     @abstractmethod
     async def search_similar(
-        self, embedding: list[float], limit: int = 4
+        self, embedding: list[float], limit: int = 4, query_text: str = ""
     ) -> list[RagDocumentChunkEntity]:
-        """임베딩과 가장 유사한 청크를 검색한다."""
+        """임베딩 유사도와 query_text의 trigram 키워드 매칭을 함께 고려해 청크를 검색한다."""

@@ -8,7 +8,7 @@ from rag.adapter.inbound.api.schemas.rag_document_schema import RagUploadRespons
 from rag.app.ports.input.rag_document_use_case import RagDocumentUseCase
 from rag.app.ports.output.rag_document_port import RagDocumentPort
 from rag.domain.entities.rag_document_chunk_entity import RagDocumentChunkEntity
-from rag.domain.rag_chunking import split_into_chunks
+from rag.domain.rag_chunking import split_into_chunks, split_sql_into_chunks
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,9 @@ class RagDocumentInteractor(RagDocumentUseCase):
         from core.matrix.ollama_neo_local_model import generate_embedding_ollama
 
         size_bytes = len(text.encode("utf-8"))
-        chunk_texts = split_into_chunks(text)
+        chunk_texts = (
+            split_sql_into_chunks(text) if filename.lower().endswith(".sql") else split_into_chunks(text)
+        )
         if not chunk_texts:
             return RagUploadResponseSchema(
                 filename=filename,
@@ -69,7 +71,7 @@ class RagDocumentInteractor(RagDocumentUseCase):
             return RagChatResponseSchema(text="질문을 입력해 주세요.")
 
         query_embedding = await asyncio.to_thread(generate_embedding_ollama, text=question)
-        matches = await self.repository.search_similar(query_embedding, limit=_TOP_K)
+        matches = await self.repository.search_similar(query_embedding, limit=_TOP_K, query_text=question)
 
         if not matches:
             answer = await asyncio.to_thread(

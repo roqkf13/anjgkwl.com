@@ -72,6 +72,7 @@ DB는 호스트에 직접 설치하지 않고, Docker 컨테이너로 띄운다.
 | address | VARCHAR(60) | |
 | ddd | VARCHAR(10) | |
 | tel | VARCHAR(10) | |
+| embedding | VECTOR(1536) | nullable |
 
 ### 2-2. team
 | 컬럼 | 타입 | 제약 |
@@ -90,6 +91,7 @@ DB는 호스트에 직접 설치하지 않고, Docker 컨테이너로 띄운다.
 | homepage | VARCHAR(50) | |
 | owner | VARCHAR(10) | |
 | stadium_id | VARCHAR(10) | FK → stadium.stadium_id (nullable) |
+| embedding | VECTOR(1536) | nullable |
 
 ### 2-3. player
 | 컬럼 | 타입 | 제약 |
@@ -107,6 +109,7 @@ DB는 호스트에 직접 설치하지 않고, Docker 컨테이너로 띄운다.
 | height | INTEGER | |
 | weight | INTEGER | |
 | team_id | VARCHAR(10) | FK → team.team_id (nullable) |
+| embedding | VECTOR(1536) | nullable |
 
 ### 2-4. schedule
 | 컬럼 | 타입 | 제약 |
@@ -118,8 +121,10 @@ DB는 호스트에 직접 설치하지 않고, Docker 컨테이너로 띄운다.
 | awayteam_id | VARCHAR(10) | |
 | home_score | INTEGER | |
 | away_score | INTEGER | |
+| embedding | VECTOR(1536) | nullable |
 
 **참고**: `schedule`의 PK는 `sche_date` + `stadium_id` 복합키(ERD 상 두 컬럼 모두 열쇠 아이콘)로 처리할 것.
+**참고**: 4개 테이블 모두 `embedding VECTOR(1536)` 컬럼을 nullable로 추가한다 (pgvector 확장 필요).
 
 ---
 
@@ -143,7 +148,8 @@ DB는 호스트에 직접 설치하지 않고, Docker 컨테이너로 띄운다.
    - `0002_create_team_table`
    - `0003_create_player_table`
    - `0004_create_schedule_table`
-4. 각 revision 파일의 `upgrade()`에는 `op.create_table(...)`로 테이블 생성, `downgrade()`에는 `op.drop_table(...)`로 롤백 로직을 작성.
+   - `0005_add_soccer_embeddings` (4개 테이블에 `embedding VECTOR(1536)` 컬럼 추가)
+4. 0001~0004 revision 파일의 `upgrade()`에는 `op.create_table(...)`로 테이블 생성, `downgrade()`에는 `op.drop_table(...)`로 롤백 로직을 작성. 0005 revision은 `op.add_column(...)` / `op.drop_column(...)`으로 작성.
 5. (컨테이너가 `healthy` 상태인지 재확인 후) `alembic upgrade head`를 실행하여 실제로 테이블이 생성되는지 확인.
 6. `docker compose exec db psql -U <user> -d <db> -c "\d <table>"` 형태로 컨테이너 내부 DB에 접속하여 `stadium`, `team`, `player`, `schedule` 결과를 출력해서 컬럼/타입/PK/FK가 명세와 일치하는지 검증.
 7. `alembic downgrade -1`을 1회 실행해 최신 리비전이 정상적으로 롤백되는지도 확인 후, 다시 `alembic upgrade head`로 원복.

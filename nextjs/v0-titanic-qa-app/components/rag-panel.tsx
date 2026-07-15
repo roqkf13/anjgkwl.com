@@ -21,6 +21,8 @@ import {
 const apiBaseUrl =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
 
+const UPLOAD_TIMEOUT_MS = 180_000;
+
 const ALLOWED_EXTENSIONS = [
   ".pdf",
   ".txt",
@@ -103,8 +105,15 @@ export function RagPanel() {
     const body = new FormData();
     body.append("file", file);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), UPLOAD_TIMEOUT_MS);
+
     try {
-      const res = await fetch(`${apiBaseUrl}/rag/upload`, { method: "POST", body });
+      const res = await fetch(`${apiBaseUrl}/rag/upload`, {
+        method: "POST",
+        body,
+        signal: controller.signal,
+      });
       if (!res.ok) {
         const msg = await res.text().catch(() => "");
         throw new Error(msg || `HTTP ${res.status}`);
@@ -117,15 +126,16 @@ export function RagPanel() {
             : m,
         ),
       );
-    } catch {
+    } catch (err) {
+      const text =
+        err instanceof DOMException && err.name === "AbortError"
+          ? "업로드 시간이 초과됐습니다. 파일 크기를 줄이거나 다시 시도해 주세요."
+          : "업로드에 실패했습니다. 다시 시도해 주세요.";
       setMessages((prev) =>
-        prev.map((m) =>
-          m.id === id
-            ? { ...m, status: "error", text: "업로드에 실패했습니다. 다시 시도해 주세요." }
-            : m,
-        ),
+        prev.map((m) => (m.id === id ? { ...m, status: "error", text } : m)),
       );
     } finally {
+      clearTimeout(timeoutId);
       setIsUploading(false);
     }
   }, []);

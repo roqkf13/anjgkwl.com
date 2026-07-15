@@ -13,6 +13,7 @@ from rag.domain.rag_chunking import split_into_chunks, split_sql_into_chunks
 logger = logging.getLogger(__name__)
 
 _TOP_K = 4
+_MAX_CONCURRENT_EMBEDDINGS = 2
 
 
 class RagDocumentInteractor(RagDocumentUseCase):
@@ -38,9 +39,13 @@ class RagDocumentInteractor(RagDocumentUseCase):
                 message="문서에서 추출된 텍스트가 없습니다.",
             )
 
-        embeddings = await asyncio.gather(
-            *(asyncio.to_thread(generate_embedding_ollama, text=chunk) for chunk in chunk_texts)
-        )
+        semaphore = asyncio.Semaphore(_MAX_CONCURRENT_EMBEDDINGS)
+
+        async def _embed(chunk: str) -> list[float]:
+            async with semaphore:
+                return await asyncio.to_thread(generate_embedding_ollama, text=chunk)
+
+        embeddings = await asyncio.gather(*(_embed(chunk) for chunk in chunk_texts))
         chunks = [
             RagDocumentChunkEntity(
                 id=None,

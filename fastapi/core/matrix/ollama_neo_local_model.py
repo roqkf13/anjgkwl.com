@@ -7,6 +7,15 @@ from ollama import Client
 
 DEFAULT_OLLAMA_MODEL = "llama3.2"
 DEFAULT_OLLAMA_EMBEDDING_MODEL = "nomic-embed-text"
+DEFAULT_OLLAMA_TIMEOUT_SECONDS = 120.0
+
+
+@lru_cache
+def get_ollama_timeout_seconds() -> float:
+    raw = os.getenv("OLLAMA_TIMEOUT_SECONDS")
+    if not raw:
+        return DEFAULT_OLLAMA_TIMEOUT_SECONDS
+    return float(raw)
 
 
 @lru_cache
@@ -26,7 +35,7 @@ def get_ollama_embedding_model_name() -> str:
 
 @lru_cache
 def get_ollama_client() -> Client:
-    return Client(host=get_ollama_base_url())
+    return Client(host=get_ollama_base_url(), timeout=get_ollama_timeout_seconds())
 
 
 def generate_reply_ollama(*, message: str) -> str:
@@ -57,6 +66,7 @@ __all__ = [
     "get_ollama_base_url",
     "get_ollama_model_name",
     "get_ollama_embedding_model_name",
+    "get_ollama_timeout_seconds",
     "generate_reply_ollama",
     "generate_embedding_ollama",
 ]

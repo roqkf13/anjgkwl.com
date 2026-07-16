@@ -33,7 +33,7 @@ from scout.adapter.inbound.api import scout_routers
 from community.adapter.inbound.api import community_router
 from admin.adapter.inbound.api import admin_router
 from admin.adapter.inbound.api.v1.piper_name_router import name_router
-from ontology.adapter.inbound.api import vision_router
+from ontology.adapter.inbound.api import vision_router, route_router
 from rag.adapter.inbound.api import rag_router
 from titanic.adapter.inbound.api import titanic_router
 
@@ -99,6 +99,7 @@ app.include_router(admin_router)
 app.include_router(name_router, prefix="/api/v1")
 app.include_router(titanic_router)
 app.include_router(vision_router)
+app.include_router(route_router)
 app.include_router(rag_router)
 
 @app.get("/")

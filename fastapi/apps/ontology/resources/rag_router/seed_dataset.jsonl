@@ -1,3 +1,81 @@
+{"text": "로그인이 안 돼요", "label": "auth"}
+{"text": "비밀번호를 잊어버렸어요", "label": "auth"}
+{"text": "아이디 찾기는 어떻게 해요?", "label": "auth"}
+{"text": "회원가입은 어떻게 하나요?", "label": "auth"}
+{"text": "이메일 인증 메일이 안 와요", "label": "auth"}
+{"text": "비밀번호 변경 페이지가 어디예요?", "label": "auth"}
+{"text": "2차 인증 설정하는 방법 알려줘", "label": "auth"}
+{"text": "로그아웃은 어떻게 하나요?", "label": "auth"}
+{"text": "세션이 자꾸 끊겨요", "label": "auth"}
+{"text": "비밀번호 규칙이 어떻게 되나요?", "label": "auth"}
+{"text": "로그인 시도가 너무 많다고 잠겼어요", "label": "auth"}
+{"text": "소셜 로그인 지원하나요?", "label": "auth"}
+{"text": "아이디 중복 확인은 어떻게 해요?", "label": "auth"}
+{"text": "인증번호가 안 와요", "label": "auth"}
+{"text": "자동 로그인 설정하고 싶어요", "label": "auth"}
+{"text": "비밀번호 재설정 링크가 만료됐어요", "label": "auth"}
+{"text": "회원가입 시 인증 코드가 틀렸다고 나와요", "label": "auth"}
+{"text": "보안 질문 설정은 어디서 하나요?", "label": "auth"}
+{"text": "다른 기기에서 로그인한 기록을 확인하고 싶어요", "label": "auth"}
+{"text": "탈퇴한 계정으로 다시 가입할 수 있나요?", "label": "auth"}
+{"text": "계정 탈퇴하고 싶어요", "label": "auth"}
+{"text": "회원 탈퇴는 어떻게 하나요?", "label": "auth"}
+{"text": "비밀번호를 여러 번 틀렸더니 계정이 잠겼어요", "label": "auth"}
+{"text": "인증서 로그인은 어떻게 하나요?", "label": "auth"}
+{"text": "내 정보 수정은 어디서 해요?", "label": "crud"}
+{"text": "내 프로필 사진 바꾸고 싶어요", "label": "crud"}
+{"text": "회원 정보 조회하고 싶어요", "label": "crud"}
+{"text": "찜한 게임 목록 보여줘", "label": "crud"}
+{"text": "내가 쓴 글 삭제하고 싶어요", "label": "crud"}
+{"text": "주소록에 연락처 하나 추가해줘", "label": "crud"}
+{"text": "저장한 문서 목록 보여줘", "label": "crud"}
+{"text": "알림 설정 끄고 싶어요", "label": "crud"}
+{"text": "결제 취소는 어떻게 하나요?", "label": "crud"}
+{"text": "내 닉네임 변경하고 싶어요", "label": "crud"}
+{"text": "등록한 이메일 주소 목록 보여줘", "label": "crud"}
+{"text": "업로드한 파일 삭제해줘", "label": "crud"}
+{"text": "내 활동 내역 조회하고 싶어요", "label": "crud"}
+{"text": "즐겨찾기 목록에서 하나 빼고 싶어요", "label": "crud"}
+{"text": "프로필 공개 범위 설정 바꾸고 싶어요", "label": "crud"}
+{"text": "내가 남긴 리뷰 수정하고 싶어요", "label": "crud"}
+{"text": "저장된 카드 정보 삭제해줘", "label": "crud"}
+{"text": "구독 취소하고 싶어요", "label": "crud"}
+{"text": "내 게시글 목록 보여줘", "label": "crud"}
+{"text": "주문 내역 조회하고 싶어요", "label": "crud"}
+{"text": "받은 편지함에서 메일 하나 지워줘", "label": "crud"}
+{"text": "오프사이드 규칙이 뭐야?", "label": "general_qa"}
+{"text": "축구 경기 시간은 몇 분이야?", "label": "general_qa"}
+{"text": "옐로카드 두 장 받으면 어떻게 돼?", "label": "general_qa"}
+{"text": "축구에서 페널티킥은 언제 주어져?", "label": "general_qa"}
+{"text": "월드컵은 몇 년마다 열려?", "label": "general_qa"}
+{"text": "손흥민이 누구야?", "label": "general_qa"}
+{"text": "메시랑 호날두 중 누가 더 잘해?", "label": "general_qa"}
+{"text": "이 사이트에서 뭘 할 수 있어?", "label": "general_qa"}
+{"text": "다크모드는 어떻게 켜요?", "label": "general_qa"}
+{"text": "이 서비스 이용료가 있나요?", "label": "general_qa"}
+{"text": "안녕하세요", "label": "general_qa"}
+{"text": "너는 누구야?", "label": "general_qa"}
+{"text": "고마워", "label": "general_qa"}
+{"text": "오늘 날씨 어때?", "label": "general_qa"}
+{"text": "심심한데 아무 얘기나 해줘", "label": "general_qa"}
+{"text": "인디 게임 추천해줘", "label": "general_qa"}
+{"text": "이 게임 패치노트 번역해줘", "label": "general_qa"}
+{"text": "요즘 재밌는 RPG 게임 있어?", "label": "general_qa"}
+{"text": "타이타닉 생존자 예측 모델은 어떻게 쓰는거야?", "label": "general_qa"}
+{"text": "이 앱 버그 신고는 어디서 해요?", "label": "general_qa"}
+{"text": "고객센터 전화번호 알려줘", "label": "general_qa"}
+{"text": "이용약관 어디서 볼 수 있어?", "label": "general_qa"}
+{"text": "축구 포지션 종류에는 뭐가 있어?", "label": "general_qa"}
+{"text": "메시 발롱도르 몇 번 탔어?", "label": "general_qa"}
+{"text": "호날두 통산 득점이 몇 골이야?", "label": "general_qa"}
+{"text": "맨체스터 유나이티드 이번 시즌 몇 등이야?", "label": "general_qa"}
+{"text": "레알마드리드 챔피언스리그 우승 몇 번 했어?", "label": "general_qa"}
+{"text": "김민재 나폴리에서 잘하고 있어?", "label": "general_qa"}
+{"text": "이강인 파리생제르맹 소속 맞지?", "label": "general_qa"}
+{"text": "바르셀로나 홈구장 이름이 뭐야?", "label": "general_qa"}
+{"text": "월드컵 최다 우승국이 어디야?", "label": "general_qa"}
+{"text": "프리미어리그 이번 시즌 득점왕이 누구야?", "label": "general_qa"}
+{"text": "손흥민 이적료가 얼마였어?", "label": "general_qa"}
 {"text": "전북 현대 홈구장이 어디야?", "label": "rag_needed"}
 {"text": "서울월드컵경기장 수용 인원이 몇 명이야?", "label": "rag_needed"}
 {"text": "울산현대 공식 홈페이지 주소 알려줘", "label": "rag_needed"}
@@ -33,51 +111,6 @@
 {"text": "경남FC 홈구장 전화번호 알려줘", "label": "rag_needed"}
 {"text": "MF 포지션 선수들만 뽑아서 보여줘", "label": "rag_needed"}
 {"text": "1990년대에 창단된 팀들 알려줘", "label": "rag_needed"}
-{"text": "로그인이 안 돼요", "label": "no_rag_needed"}
-{"text": "비밀번호를 잊어버렸어요", "label": "no_rag_needed"}
-{"text": "아이디 찾기는 어떻게 해요?", "label": "no_rag_needed"}
-{"text": "회원가입은 어떻게 하나요?", "label": "no_rag_needed"}
-{"text": "이메일 인증 메일이 안 와요", "label": "no_rag_needed"}
-{"text": "계정 탈퇴하고 싶어요", "label": "no_rag_needed"}
-{"text": "내 정보 수정은 어디서 해요?", "label": "no_rag_needed"}
-{"text": "비밀번호 변경 페이지가 어디예요?", "label": "no_rag_needed"}
-{"text": "2차 인증 설정하는 방법 알려줘", "label": "no_rag_needed"}
-{"text": "로그아웃은 어떻게 하나요?", "label": "no_rag_needed"}
-{"text": "오프사이드 규칙이 뭐야?", "label": "no_rag_needed"}
-{"text": "축구 경기 시간은 몇 분이야?", "label": "no_rag_needed"}
-{"text": "옐로카드 두 장 받으면 어떻게 돼?", "label": "no_rag_needed"}
-{"text": "축구에서 페널티킥은 언제 주어져?", "label": "no_rag_needed"}
-{"text": "월드컵은 몇 년마다 열려?", "label": "no_rag_needed"}
-{"text": "손흥민이 누구야?", "label": "no_rag_needed"}
-{"text": "메시랑 호날두 중 누가 더 잘해?", "label": "no_rag_needed"}
-{"text": "이 사이트에서 뭘 할 수 있어?", "label": "no_rag_needed"}
-{"text": "다크모드는 어떻게 켜요?", "label": "no_rag_needed"}
-{"text": "이 서비스 이용료가 있나요?", "label": "no_rag_needed"}
-{"text": "안녕하세요", "label": "no_rag_needed"}
-{"text": "너는 누구야?", "label": "no_rag_needed"}
-{"text": "고마워", "label": "no_rag_needed"}
-{"text": "오늘 날씨 어때?", "label": "no_rag_needed"}
-{"text": "심심한데 아무 얘기나 해줘", "label": "no_rag_needed"}
-{"text": "인디 게임 추천해줘", "label": "no_rag_needed"}
-{"text": "이 게임 패치노트 번역해줘", "label": "no_rag_needed"}
-{"text": "요즘 재밌는 RPG 게임 있어?", "label": "no_rag_needed"}
-{"text": "타이타닉 생존자 예측 모델은 어떻게 쓰는거야?", "label": "no_rag_needed"}
-{"text": "이 앱 버그 신고는 어디서 해요?", "label": "no_rag_needed"}
-{"text": "고객센터 전화번호 알려줘", "label": "no_rag_needed"}
-{"text": "결제 취소는 어떻게 하나요?", "label": "no_rag_needed"}
-{"text": "알림 설정 끄고 싶어요", "label": "no_rag_needed"}
-{"text": "이용약관 어디서 볼 수 있어?", "label": "no_rag_needed"}
-{"text": "축구 포지션 종류에는 뭐가 있어?", "label": "no_rag_needed"}
-{"text": "메시 발롱도르 몇 번 탔어?", "label": "no_rag_needed"}
-{"text": "호날두 통산 득점이 몇 골이야?", "label": "no_rag_needed"}
-{"text": "맨체스터 유나이티드 이번 시즌 몇 등이야?", "label": "no_rag_needed"}
-{"text": "레알마드리드 챔피언스리그 우승 몇 번 했어?", "label": "no_rag_needed"}
-{"text": "김민재 나폴리에서 잘하고 있어?", "label": "no_rag_needed"}
-{"text": "이강인 파리생제르맹 소속 맞지?", "label": "no_rag_needed"}
-{"text": "바르셀로나 홈구장 이름이 뭐야?", "label": "no_rag_needed"}
-{"text": "월드컵 최다 우승국이 어디야?", "label": "no_rag_needed"}
-{"text": "프리미어리그 이번 시즌 득점왕이 누구야?", "label": "no_rag_needed"}
-{"text": "손흥민 이적료가 얼마였어?", "label": "no_rag_needed"}
 {"text": "울산현대 소속 선수들 포지션별로 알려줘", "label": "rag_needed"}
 {"text": "K리그 팀들 홈구장 목록 전체 보여줘", "label": "rag_needed"}
 {"text": "전남드래곤즈 창단 연도가 몇 년이야?", "label": "rag_needed"}

@@ -12,7 +12,11 @@ from rag.app.ports.input.rag_document_use_case import RagDocumentUseCase
 
 
 class RagRouterInteractor(RagRouterUseCase):
-    """분류기로 RAG 필요 여부를 판단해 rag(축구 도메인) 또는 제미나이로 라우팅한다."""
+    """분류기로 질문을 4갈래(auth/crud/general_qa/rag_needed)로 판단해 라우팅한다.
+
+    auth/crud는 LLM을 호출하지 않고 라우팅 신호만 반환한다 — 실제 처리는
+    호출한 쪽(프론트엔드 또는 상위 API)이 route 값을 보고 로그인/CRUD 플로우로 이어간다.
+    """
 
     def __init__(self, classifier: RagRouterClassifierPort, rag_use_case: RagDocumentUseCase) -> None:
         self._classifier = classifier
@@ -20,6 +24,9 @@ class RagRouterInteractor(RagRouterUseCase):
 
     async def route(self, command: RouteQueryCommand) -> RouteQueryResponse:
         label, confidence = await asyncio.to_thread(self._classifier.classify, command.text)
+
+        if label in ("auth", "crud"):
+            return RouteQueryResponse(route=label, answer="", confidence=confidence)
 
         if label == "rag_needed":
             schema = RagChatSchema(messages=[RagMessageItem(role="user", text=command.text)])

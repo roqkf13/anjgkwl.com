@@ -8,6 +8,6 @@ class RouteQueryCommand:
 
 @dataclass(frozen=True)
 class RouteQueryResponse:
-    route: str  # "rag" | "gemini"
+    route: str  # "auth" | "crud" | "rag" | "gemini"
     answer: str
     confidence: float

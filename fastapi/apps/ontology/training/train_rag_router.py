@@ -22,7 +22,7 @@ MODEL_NAME = "klue/roberta-base"
 DATA_PATH = Path(__file__).parent.parent / "resources" / "rag_router" / "seed_dataset.jsonl"
 OUTPUT_DIR = Path(__file__).parent.parent / "resources" / "rag_router" / "model"
 
-LABEL2ID = {"no_rag_needed": 0, "rag_needed": 1}
+LABEL2ID = {"auth": 0, "crud": 1, "general_qa": 2, "rag_needed": 3}
 ID2LABEL = {v: k for k, v in LABEL2ID.items()}
 
 
@@ -101,12 +101,12 @@ def main() -> None:
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     model = AutoModelForSequenceClassification.from_pretrained(
-        MODEL_NAME, num_labels=2, id2label=ID2LABEL, label2id=LABEL2ID
+        MODEL_NAME, num_labels=4, id2label=ID2LABEL, label2id=LABEL2ID
     ).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
 
     if args.overfit_check:
-        subset = examples[:16]
+        subset = examples[:24]
         loader = DataLoader(RagRouterDataset(subset, tokenizer), batch_size=args.batch_size, shuffle=True)
         epochs = args.epochs or 30
         print(f"[오버핏 검증] 샘플 {len(subset)}개로 {epochs} epoch 학습 — loss가 0에 가까워지는지 확인")

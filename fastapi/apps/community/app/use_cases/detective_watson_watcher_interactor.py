@@ -2,7 +2,7 @@
 
 police_lestrade_telegram, police_anderson_discord 등 채널 어댑터로부터 이벤트를
 낚아채어(Watch & Hook), 주입된 EscalationPolicyPort 목록으로 판단해
-홈즈(자체 처리) 또는 star_craft 온톨로지 버스(페이커 에스컬레이션)로 라우팅한다.
+홈즈(자체 처리) 또는 ontology 온톨로지 버스(페이커 에스컬레이션)로 라우팅한다.
 
 정책(EscalationPolicyPort)을 교체·추가하는 것만으로 판단 기준을 확장할 수 있어
 (예: 욕설/스팸 필터링 정책 추가) 트리아지 로직 자체는 수정하지 않아도 된다.
@@ -22,5 +22,5 @@ class WatsonWatcherInteractor(WatsonWatcherUseCase):
 
     def triage(self, event: InboundEvent) -> RoutingDecision:
         if any(policy.should_escalate(event) for policy in self._escalation_policies):
-            return RoutingDecision.STAR_CRAFT_ESCALATION
+            return RoutingDecision.ONTOLOGY_ESCALATION
         return RoutingDecision.HOLMES

@@ -6,9 +6,9 @@ from admin.adapter.inbound.api.v1.piper_dinesh_dash_router import dinesh_dash_ro
 from admin.adapter.inbound.api.v1.piper_gilfoyle_system_router import gilfoyle_system_router
 from admin.adapter.inbound.api.v1.piper_bighetti_hr_router import bighetti_hr_router
 
-silicon_valley_router = APIRouter(prefix="/silicon-valley", tags=["silicon-valley"])
-silicon_valley_router.include_router(handrick_ceo_router)
-silicon_valley_router.include_router(dunn_coo_router)
-silicon_valley_router.include_router(dinesh_dash_router)
-silicon_valley_router.include_router(gilfoyle_system_router)
-silicon_valley_router.include_router(bighetti_hr_router)
+admin_router = APIRouter(prefix="/admin", tags=["admin"])
+admin_router.include_router(handrick_ceo_router)
+admin_router.include_router(dunn_coo_router)
+admin_router.include_router(dinesh_dash_router)
+admin_router.include_router(gilfoyle_system_router)
+admin_router.include_router(bighetti_hr_router)

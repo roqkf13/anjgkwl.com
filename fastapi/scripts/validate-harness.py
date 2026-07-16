@@ -17,7 +17,7 @@
 MD frontmatter 예시:
   ---
   type: hub          # 또는 spoke
-  id: star_craft
+  id: ontology
   title: "허브 이름"
   links:
     - friday13th

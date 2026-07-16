@@ -30,8 +30,8 @@ from doro.app.doro_director import DoroDirector
 from friday13th.adapter.inbound.api.v1 import friday13th_v1_routers
 from friday13th.adapter.outbound.orm.user_model import Base as Friday13thBase
 from scout.adapter.inbound.api import scout_routers
-from community.adapter.inbound.api import sherlock_homes_router
-from admin.adapter.inbound.api import silicon_valley_router
+from community.adapter.inbound.api import community_router
+from admin.adapter.inbound.api import admin_router
 from admin.adapter.inbound.api.v1.piper_name_router import name_router
 from ontology.adapter.inbound.api import vision_router
 from rag.adapter.inbound.api import rag_router
@@ -94,8 +94,8 @@ for friday13th_router in friday13th_v1_routers:
     app.include_router(friday13th_router)
 for scout_router in scout_routers:
     app.include_router(scout_router)
-app.include_router(sherlock_homes_router)
-app.include_router(silicon_valley_router)
+app.include_router(community_router)
+app.include_router(admin_router)
 app.include_router(name_router, prefix="/api/v1")
 app.include_router(titanic_router)
 app.include_router(vision_router)

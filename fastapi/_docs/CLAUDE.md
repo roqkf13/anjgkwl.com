@@ -129,7 +129,7 @@ from abiswallow.core.database import get_db
 | `adapters` | 공유 어댑터 (`DatabaseHealthAdapter`) | `GET /health/db` |
 | `agora` | (확장 예정) | — |
 | `inception` | (확장 예정) | — |
-| `social_network` | (확장 예정) | — |
+| `community` | (확장 예정) | — |
 | `imitation_game` | (확장 예정) | — |
 
 ---

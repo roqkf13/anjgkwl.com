@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-name_router = APIRouter(tags=["silicon-valley-v1"])
+name_router = APIRouter(tags=["admin-v1"])
 
 _CHARACTERS: dict[str, dict] = {
     "handrick": {"id": 1,  "name": "리처드 헨드릭스 (Richard Hendricks)", "role": "CEO"},

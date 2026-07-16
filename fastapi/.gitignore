@@ -86,7 +86,10 @@ coverage.xml
 
 # YOLO/PyTorch 가중치 파일 (자동 다운로드됨)
 *.pt
-apps/star_craft/resources/yolo_train_runs/
+apps/ontology/resources/yolo_train_runs/
+
+# 학습된 RAG 라우터 분류기 모델 (train_rag_router.py로 재생성 가능)
+apps/ontology/resources/rag_router/model/
 
 # ---------------------------------------------------------------------------
 # 로그·로컬 DB·덤프

@@ -1,7 +1,7 @@
 ---
 type: hub
-id: star_craft
-title: "Star Craft Hub — Graph·Vector DB 라이프라인 전략"
+id: ontology
+title: "Ontology Hub — Graph·Vector DB 라이프라인 전략"
 links:
   - friday13th
   - scout
@@ -9,17 +9,17 @@ links:
   - doro
 ---
 
-# Star Craft Hub — Graph·Vector DB 라이프라인 전략
+# Ontology Hub — Graph·Vector DB 라이프라인 전략
 
 ## 1. 전제: 허브가 DB 라이프라인을 독점하는 이유
 
 스타 토폴로지에서 스포크(spoke)는 서로를 직접 알면 안 된다.
 그래프 DB와 벡터 DB는 **스포크 간 관계 정보**와 **의미 검색 인덱스**를 담기 때문에,
-이 두 DB에 대한 접속 라이프라인은 **허브(star_craft)만** 소유한다.
+이 두 DB에 대한 접속 라이프라인은 **허브(ontology)만** 소유한다.
 
 ```
-스포크 A ──▶ hub (star_craft) ──▶ Neo4j   (관계 그래프)
-스포크 B ──▶ hub (star_craft) ──▶ Qdrant  (벡터 인덱스)
+스포크 A ──▶ hub (ontology) ──▶ Neo4j   (관계 그래프)
+스포크 B ──▶ hub (ontology) ──▶ Qdrant  (벡터 인덱스)
 ```
 
 스포크가 그래프/벡터 정보가 필요하면 허브 포트(Port)를 통해 요청한다.
@@ -84,7 +84,7 @@ QDRANT_PORT=6333
 ## 4. 허브 내 아키텍처 (헥사고날)
 
 ```
-apps/star_craft/
+apps/ontology/
 ├── adapter/
 │   └── outbound/
 │       ├── graph/
@@ -161,16 +161,16 @@ def get_qdrant_client() -> AsyncQdrantClient:
 [스포크 유스케이스]
       │  HTTP / 내부 함수 호출
       ▼
-[star_craft 유스케이스]
+[ontology 유스케이스]
       │  GraphPort / VectorPort (추상)
       ▼
-[star_craft outbound 어댑터]
+[ontology outbound 어댑터]
       │  neo4j AsyncDriver  /  AsyncQdrantClient
       ▼
 [Docker: neo4j:7687 / qdrant:6333]
 ```
 
-스포크는 star_craft의 **inbound API(라우터)** 또는 **내부 포트 함수**를 호출한다.
+스포크는 ontology의 **inbound API(라우터)** 또는 **내부 포트 함수**를 호출한다.
 직접 DB 드라이버를 import하지 않는다.
 
 ---

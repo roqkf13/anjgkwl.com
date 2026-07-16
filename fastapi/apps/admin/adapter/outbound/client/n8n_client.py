@@ -1,4 +1,4 @@
-# apps/silicon_valley/adapter/outbound/client/n8n_client.py
+# apps/admin/adapter/outbound/client/n8n_client.py
 import httpx
 import os
 

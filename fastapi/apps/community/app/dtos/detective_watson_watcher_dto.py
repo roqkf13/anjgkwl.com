@@ -4,7 +4,7 @@ from enum import Enum
 
 class RoutingDecision(str, Enum):
     HOLMES = "holmes"
-    STAR_CRAFT_ESCALATION = "star_craft_escalation"
+    ONTOLOGY_ESCALATION = "ontology_escalation"
 
 
 @dataclass(frozen=True)

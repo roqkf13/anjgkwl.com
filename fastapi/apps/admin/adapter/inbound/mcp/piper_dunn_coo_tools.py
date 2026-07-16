@@ -1,4 +1,4 @@
-# apps/silicon_valley/adapter/inbound/mcp/piper_dunn_coo_tools.py
+# apps/admin/adapter/inbound/mcp/piper_dunn_coo_tools.py
 from mcp.server.fastmcp import FastMCP
 from apps.admin.adapter.outbound.client.n8n_client import N8nClient
 

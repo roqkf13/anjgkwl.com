@@ -2,7 +2,7 @@
 -- 실행 순서: stadium -> team -> player -> schedule (FK 의존성 순서)
 
 -- 1) stadium
-INSERT INTO stadium (stadium_id, statdium_name, hometeam_id, seat_count, address, ddd, tel) VALUES
+INSERT INTO stadium (stadium_id, stadium_name, hometeam_id, seat_count, address, ddd, tel) VALUES
 ('D03', '전주월드컵경기장', 'K05', 28000, '전북 전주시 덕진구 반월동 763-1', '063', '273-1763'),
 ('B02', '성남종합운동장', 'K08', 27000, '경기도 성남시 분당구 야탑동 486', '031', '753-3956'),
 ('C06', '포항스틸야드', 'K03', 25000, '경북 포항시 남구 괴동 1', '054', '282-2002'),

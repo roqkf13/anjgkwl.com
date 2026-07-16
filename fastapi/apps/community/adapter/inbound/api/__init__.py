@@ -7,10 +7,10 @@ from community.adapter.inbound.api.v1.detective_watson_executor_router import wa
 from community.adapter.inbound.api.v1.received_email_router import received_email_router
 from community.adapter.inbound.api.v1.classify_spam_router import classify_spam_router
 
-sherlock_homes_router = APIRouter(prefix="/sherlock-homes", tags=["sherlock-homes"])
-sherlock_homes_router.include_router(telegram_router)
-sherlock_homes_router.include_router(juso_router)
-sherlock_homes_router.include_router(discord_router)
-sherlock_homes_router.include_router(watson_executor_router)
-sherlock_homes_router.include_router(received_email_router)
-sherlock_homes_router.include_router(classify_spam_router)
+community_router = APIRouter(prefix="/community", tags=["community"])
+community_router.include_router(telegram_router)
+community_router.include_router(juso_router)
+community_router.include_router(discord_router)
+community_router.include_router(watson_executor_router)
+community_router.include_router(received_email_router)
+community_router.include_router(classify_spam_router)

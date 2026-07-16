@@ -66,7 +66,7 @@ DB는 호스트에 직접 설치하지 않고, Docker 컨테이너로 띄운다.
 | 컬럼 | 타입 | 제약 |
 |---|---|---|
 | stadium_id | VARCHAR(10) | PK |
-| statdium_name | VARCHAR(40) | |
+| stadium_name | VARCHAR(40) | |
 | hometeam_id | VARCHAR(10) | |
 | seat_count | INTEGER | |
 | address | VARCHAR(60) | |

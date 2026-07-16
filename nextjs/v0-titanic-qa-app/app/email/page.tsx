@@ -48,7 +48,7 @@ function ContactUploadModal({ onClose, onUploaded }: { onClose: () => void; onUp
     const body = new FormData();
     body.append("file", file);
     try {
-      const res = await fetch(`${apiBaseUrl}/sherlock-homes/watson/contacts/upload?mode=${mode}`, { method: "POST", body });
+      const res = await fetch(`${apiBaseUrl}/community/watson/contacts/upload?mode=${mode}`, { method: "POST", body });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setFeedback({ kind: "success", text: `업로드 완료 (${data.total ?? 0}건)` });
@@ -173,7 +173,7 @@ export default function EmailPage() {
   const [inboxLoading, setInboxLoading] = useState(false);
 
   const fetchContacts = useCallback(async () => {
-    const res = await fetch(`${apiBaseUrl}/sherlock-homes/watson/contacts`);
+    const res = await fetch(`${apiBaseUrl}/community/watson/contacts`);
     if (!res.ok) return;
     const data = await res.json();
     setContacts(data.contacts ?? []);
@@ -182,7 +182,7 @@ export default function EmailPage() {
   const fetchReceivedEmails = useCallback(async () => {
     setInboxLoading(true);
     try {
-      const res = await fetch(`${apiBaseUrl}/sherlock-homes/watson/emails`);
+      const res = await fetch(`${apiBaseUrl}/community/watson/emails`);
       if (!res.ok) return;
       const data = await res.json();
       setReceivedEmails(data.emails ?? []);
@@ -206,7 +206,7 @@ export default function EmailPage() {
     e.preventDefault();
     setStatus({ type: "loading" });
     try {
-      const res = await fetch(`${apiBaseUrl}/sherlock-homes/watson/send-email`, {
+      const res = await fetch(`${apiBaseUrl}/community/watson/send-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ to, prompt, from_account: fromAccount }),

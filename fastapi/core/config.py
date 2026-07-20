@@ -28,6 +28,20 @@ class Settings(BaseModel):
     ollama_model: str = Field(
         default_factory=lambda: os.getenv("OLLAMA_MODEL", "llama3.2").strip()
     )
+    google_client_id: str = Field(
+        default_factory=lambda: os.getenv("GOOGLE_CLIENT_ID", "").strip()
+    )
+    google_client_secret: str = Field(
+        default_factory=lambda: os.getenv("GOOGLE_CLIENT_SECRET", "").strip()
+    )
+    google_oauth_redirect_uri: str = Field(
+        default_factory=lambda: os.getenv(
+            "GOOGLE_OAUTH_REDIRECT_URI", "http://127.0.0.1:8000/auth/google/callback"
+        ).strip()
+    )
+    frontend_base_url: str = Field(
+        default_factory=lambda: os.getenv("FRONTEND_BASE_URL", "http://127.0.0.1:3000").strip()
+    )
 
 
 @lru_cache

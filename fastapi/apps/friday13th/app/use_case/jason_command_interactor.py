@@ -19,7 +19,9 @@ class JasonCommandInteractor(JasonUseCase):
         if user is None:
             raise InvalidCredentialsError("이메일 또는 비밀번호가 올바르지 않습니다.")
 
-        if not verify_password(password, user["password_hash"]):
+        if user["password_hash"] is None or not verify_password(
+            password, user["password_hash"]
+        ):
             raise InvalidCredentialsError("이메일 또는 비밀번호가 올바르지 않습니다.")
 
         return {

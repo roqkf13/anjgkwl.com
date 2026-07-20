@@ -11,6 +11,7 @@ for _p in (_ROOT, _APPS):
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from typing import Annotated
 
 from fastapi import Depends
@@ -104,7 +105,7 @@ app.include_router(rag_router)
 
 @app.get("/")
 def read_root():
-    return {"message": "FAST API 메인 페이지 ", "docs": "/docs"}
+    return RedirectResponse("/auth/google/login")
 
 
 @app.get("/health/db")

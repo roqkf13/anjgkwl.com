@@ -11,6 +11,7 @@ for _p in (_ROOT, _APPS):
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from typing import Annotated
 
 from fastapi import Depends
@@ -102,9 +103,36 @@ app.include_router(vision_router)
 app.include_router(route_router)
 app.include_router(rag_router)
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def read_root():
-    return {"message": "FAST API 메인 페이지 ", "docs": "/docs"}
+    return """<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>로그인</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f9fafb; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+  .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 32px; width: 320px; box-shadow: 0 1px 3px rgba(0,0,0,.1); text-align: center; }
+  h1 { font-size: 1.25rem; margin: 0 0 24px; color: #111827; }
+  a.google-btn { display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 16px; text-decoration: none; color: #374151; font-size: .875rem; font-weight: 500; }
+  a.google-btn:hover { background: #f9fafb; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>로그인</h1>
+    <a class="google-btn" href="/auth/google/login">
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82z"/>
+        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.94-2.91l-3.88-3a7.14 7.14 0 0 1-10.62-3.76H1.44v3.1A12 12 0 0 0 12 24z"/>
+        <path fill="#FBBC05" d="M5.44 14.33a7.2 7.2 0 0 1 0-4.66v-3.1H1.44a12 12 0 0 0 0 10.86z"/>
+        <path fill="#EA4335" d="M12 4.76c1.76 0 3.35.6 4.6 1.79l3.44-3.44C17.94 1.19 15.24 0 12 0A12 12 0 0 0 1.44 6.57l4 3.1A7.15 7.15 0 0 1 12 4.76z"/>
+      </svg>
+      구글로 로그인
+    </a>
+  </div>
+</body>
+</html>"""
 
 
 @app.get("/health/db")

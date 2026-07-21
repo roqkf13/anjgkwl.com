@@ -45,6 +45,12 @@ class Settings(BaseModel):
     internal_oauth_secret: str = Field(
         default_factory=lambda: os.getenv("INTERNAL_OAUTH_SECRET", "").strip()
     )
+    docs_username: str = Field(
+        default_factory=lambda: os.getenv("DOCS_USERNAME", "").strip()
+    )
+    docs_password: str = Field(
+        default_factory=lambda: os.getenv("DOCS_PASSWORD", "").strip()
+    )
 
 
 @lru_cache

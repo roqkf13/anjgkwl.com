@@ -9,12 +9,16 @@ for _p in (_ROOT, _APPS):
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
 
+import secrets
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from typing import Annotated
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from adapters.db_health_adapter import DatabaseHealthAdapter, get_db_health_adapter
@@ -80,7 +84,7 @@ async def lifespan(app: FastAPI):
         await dispose_engine()
 
 
-app = FastAPI(title="titanic main Page", lifespan=lifespan)
+app = FastAPI(title="titanic main Page", lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
 
 app.add_middleware(
     CORSMiddleware,
@@ -89,6 +93,37 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+_docs_security = HTTPBasic()
+
+
+def _require_docs_auth(credentials: HTTPBasicCredentials = Depends(_docs_security)) -> None:
+    settings = get_settings()
+    if not settings.docs_username or not settings.docs_password:
+        raise HTTPException(status_code=503, detail="문서 접근 인증이 설정되지 않았습니다.")
+    valid_username = secrets.compare_digest(credentials.username, settings.docs_username)
+    valid_password = secrets.compare_digest(credentials.password, settings.docs_password)
+    if not (valid_username and valid_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="인증에 실패했습니다.",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+
+
+@app.get("/docs", include_in_schema=False)
+def get_protected_docs(_: None = Depends(_require_docs_auth)) -> HTMLResponse:
+    return get_swagger_ui_html(openapi_url="/openapi.json", title=f"{app.title} - Swagger UI")
+
+
+@app.get("/redoc", include_in_schema=False)
+def get_protected_redoc(_: None = Depends(_require_docs_auth)) -> HTMLResponse:
+    return get_redoc_html(openapi_url="/openapi.json", title=f"{app.title} - ReDoc")
+
+
+@app.get("/openapi.json", include_in_schema=False)
+def get_protected_openapi(_: None = Depends(_require_docs_auth)) -> JSONResponse:
+    return JSONResponse(app.openapi())
 
 app.include_router(chat_router)
 for friday13th_router in friday13th_v1_routers:

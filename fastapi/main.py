@@ -116,6 +116,9 @@ def read_root():
   h1 { font-size: 1.25rem; margin: 0 0 24px; color: #111827; }
   a.google-btn { display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 16px; text-decoration: none; color: #374151; font-size: .875rem; font-weight: 500; }
   a.google-btn:hover { background: #f9fafb; }
+  a.naver-btn { display: flex; align-items: center; justify-content: center; gap: 8px; border: none; border-radius: 8px; padding: 10px 16px; text-decoration: none; color: #fff; background: #03c75a; font-size: .875rem; font-weight: 500; margin-top: 12px; }
+  a.naver-btn:hover { background: #02b350; }
+  .naver-mark { display: inline-flex; width: 16px; height: 16px; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; line-height: 1; }
 </style>
 </head>
 <body>
@@ -129,6 +132,10 @@ def read_root():
         <path fill="#EA4335" d="M12 4.76c1.76 0 3.35.6 4.6 1.79l3.44-3.44C17.94 1.19 15.24 0 12 0A12 12 0 0 0 1.44 6.57l4 3.1A7.15 7.15 0 0 1 12 4.76z"/>
       </svg>
       구글로 로그인
+    </a>
+    <a class="naver-btn" href="https://anjgkwl.com/api/auth/naver/login">
+      <span class="naver-mark" aria-hidden="true">N</span>
+      네이버로 로그인
     </a>
   </div>
 </body>

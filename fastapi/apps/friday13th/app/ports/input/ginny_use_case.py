@@ -12,3 +12,9 @@ class GinnyUseCase(ABC):
     @abstractmethod
     async def login_with_google(self, code: str) -> dict[str, Any]:
         """구글 authorization code로 로그인(없으면 가입)합니다."""
+
+    @abstractmethod
+    async def login_with_oauth_profile(
+        self, *, provider: str, oauth_id: str, email: str, name: str
+    ) -> dict[str, Any]:
+        """이미 검증된 외부 OAuth 프로필로 로그인(없으면 가입)합니다."""

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
+from pydantic import BaseModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from core.config import get_settings
@@ -12,11 +13,23 @@ from friday13th.app.ports.input.ginny_use_case import GinnyUseCase
 from friday13th.app.use_case.ginny_command_interactor import (
     GinnyCommandInteractor,
     GoogleOAuthError,
+    OAuthProfileError,
 )
 
 ginny_router = APIRouter(tags=["ginny"])
 
 _STATE_COOKIE = "google_oauth_state"
+
+# FastAPI가 직접 code를 교환하지 않는 provider(예: 네이버)는 프론트엔드(Next.js)가
+# OAuth 핸드셰이크를 마친 뒤 검증된 프로필만 여기로 넘겨 유저를 업서트한다.
+_EXTERNAL_UPSERT_PROVIDERS = {"naver"}
+
+
+class OAuthProfilePayload(BaseModel):
+    provider: str
+    oauth_id: str
+    email: str
+    name: str
 
 
 def _ginny_use_case(db: AsyncSession) -> GinnyUseCase:
@@ -62,3 +75,33 @@ async def google_callback(
     response = RedirectResponse(f"{frontend_url}/login?oauth=success")
     response.delete_cookie(_STATE_COOKIE)
     return response
+
+
+@ginny_router.post("/auth/oauth/upsert")
+async def upsert_oauth_profile(
+    payload: OAuthProfilePayload,
+    request: Request,
+    db: AsyncSession = Depends(get_sqlmodel_session),
+) -> dict[str, object]:
+    """프론트엔드(Next.js)가 자체적으로 처리한 OAuth(예: 네이버) 결과를 유저 테이블에 반영한다.
+
+    이 엔드포인트는 브라우저가 아닌 신뢰된 서버(Next.js API route)만 호출해야 하므로
+    공유 비밀값(X-Internal-Secret)으로 검증한다.
+    """
+    settings = get_settings()
+    provided_secret = request.headers.get("x-internal-secret", "")
+    if not settings.internal_oauth_secret or provided_secret != settings.internal_oauth_secret:
+        raise HTTPException(status_code=401, detail="인증되지 않은 요청입니다.")
+    if payload.provider not in _EXTERNAL_UPSERT_PROVIDERS:
+        raise HTTPException(status_code=400, detail="지원하지 않는 provider입니다.")
+
+    use_case = _ginny_use_case(db)
+    try:
+        return await use_case.login_with_oauth_profile(
+            provider=payload.provider,
+            oauth_id=payload.oauth_id,
+            email=payload.email,
+            name=payload.name,
+        )
+    except OAuthProfileError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc

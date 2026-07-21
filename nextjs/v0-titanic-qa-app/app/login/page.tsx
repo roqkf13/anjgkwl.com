@@ -13,19 +13,22 @@ import { Separator } from "@/components/ui/separator";
 const apiBaseUrl =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
 
-function GoogleOAuthNotice() {
-  const oauthStatus = useSearchParams().get("oauth");
+function OAuthStatusNotice() {
+  const params = useSearchParams();
+  const oauthStatus = params.get("oauth");
+  const providerLabel = params.get("provider") === "naver" ? "네이버" : "구글";
+
   if (oauthStatus === "success") {
     return (
       <p className="text-sm text-green-600 dark:text-green-400" role="status">
-        구글 계정으로 로그인되었습니다.
+        {providerLabel} 계정으로 로그인되었습니다.
       </p>
     );
   }
   if (oauthStatus === "error") {
     return (
       <p className="text-sm text-red-600 dark:text-red-400" role="alert">
-        구글 로그인에 실패했습니다. 다시 시도해 주세요.
+        {providerLabel} 로그인에 실패했습니다. 다시 시도해 주세요.
       </p>
     );
   }
@@ -116,7 +119,7 @@ export default function LoginPage() {
       }
     >
       <Suspense fallback={null}>
-        <GoogleOAuthNotice />
+        <OAuthStatusNotice />
       </Suspense>
 
       <a
@@ -142,6 +145,19 @@ export default function LoginPage() {
           />
         </svg>
         구글로 로그인
+      </a>
+
+      <a
+        href="/api/auth/naver/login"
+        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#03C75A] px-4 py-2 text-sm font-medium text-white hover:bg-[#02b350] transition-colors"
+      >
+        <span
+          className="flex h-4 w-4 items-center justify-center text-[13px] font-black leading-none"
+          aria-hidden
+        >
+          N
+        </span>
+        네이버로 로그인
       </a>
 
       <div className="my-4 flex items-center gap-3">

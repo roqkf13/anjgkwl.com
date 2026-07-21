@@ -42,6 +42,9 @@ class Settings(BaseModel):
     frontend_base_url: str = Field(
         default_factory=lambda: os.getenv("FRONTEND_BASE_URL", "http://127.0.0.1:3000").strip()
     )
+    internal_oauth_secret: str = Field(
+        default_factory=lambda: os.getenv("INTERNAL_OAUTH_SECRET", "").strip()
+    )
 
 
 @lru_cache

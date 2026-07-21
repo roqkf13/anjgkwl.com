@@ -55,21 +55,6 @@ class GinnyCommandInteractor(GinnyUseCase):
         )
         return {"message": "로그인에 성공했습니다.", "user": user}
 
-    async def find_oauth_user(
-        self, *, provider: str, oauth_id: str, email: str
-    ) -> dict[str, object] | None:
-        user = await self._repository.find_by_provider_id(provider, oauth_id)
-        if user is None:
-            user = await self._repository.find_by_email(email)
-        if user is None:
-            return None
-        return {
-            "id": user["id"],
-            "name": user["name"],
-            "email": user["email"],
-            "role": user["role"],
-        }
-
     async def _upsert_oauth_user(
         self, *, provider: str, oauth_id: str, email: str, name: str
     ) -> dict[str, object]:

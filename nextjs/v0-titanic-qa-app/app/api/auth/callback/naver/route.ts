@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { PENDING_SIGNUP_COOKIE, signPendingProfile } from "@/lib/oauth-pending-signup";
 
 export const runtime = "nodejs";
 
@@ -84,6 +85,42 @@ export async function GET(req: NextRequest) {
     if (!email) {
       console.error("[naver-callback] 이메일 없음", profile);
       return redirectToLogin(req, "error", "no_email");
+    }
+
+    const lookupRes = await fetch(`${apiBaseUrl}/auth/oauth/lookup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-internal-secret": internalSecret,
+      },
+      body: JSON.stringify({ provider: "naver", oauth_id: profile.id, email }),
+    });
+    if (!lookupRes.ok) {
+      const lookupBody = await lookupRes.text();
+      console.error("[naver-callback] 백엔드 lookup 실패", lookupRes.status, lookupBody);
+      return redirectToLogin(req, "error", "lookup_failed");
+    }
+    const { exists } = (await lookupRes.json()) as { exists: boolean };
+
+    if (!exists) {
+      // 신규 유저: 계정을 바로 만들지 않고, 서비스 약관 동의부터 받는다.
+      const pendingCookie = signPendingProfile({
+        provider: "naver",
+        oauthId: profile.id,
+        email,
+        name,
+        issuedAt: Date.now(),
+      });
+      const consentUrl = new URL("/signup/naver-consent", req.url);
+      const response = NextResponse.redirect(consentUrl);
+      response.cookies.delete(STATE_COOKIE);
+      response.cookies.set(PENDING_SIGNUP_COOKIE, pendingCookie, {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 600,
+        path: "/",
+      });
+      return response;
     }
 
     const upsertRes = await fetch(`${apiBaseUrl}/auth/oauth/upsert`, {

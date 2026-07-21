@@ -32,6 +32,19 @@ class OAuthProfilePayload(BaseModel):
     name: str
 
 
+class OAuthLookupPayload(BaseModel):
+    provider: str
+    oauth_id: str
+    email: str
+
+
+def _require_internal_secret(request: Request) -> None:
+    settings = get_settings()
+    provided_secret = request.headers.get("x-internal-secret", "")
+    if not settings.internal_oauth_secret or provided_secret != settings.internal_oauth_secret:
+        raise HTTPException(status_code=401, detail="인증되지 않은 요청입니다.")
+
+
 def _ginny_use_case(db: AsyncSession) -> GinnyUseCase:
     settings = get_settings()
     repository = GinnyPgRepository(db)
@@ -77,6 +90,28 @@ async def google_callback(
     return response
 
 
+@ginny_router.post("/auth/oauth/lookup")
+async def lookup_oauth_profile(
+    payload: OAuthLookupPayload,
+    request: Request,
+    db: AsyncSession = Depends(get_sqlmodel_session),
+) -> dict[str, object]:
+    """계정을 생성하지 않고, 이미 가입된 유저인지만 확인한다.
+
+    프론트엔드가 신규 유저에게 서비스 약관 동의를 먼저 받기 위해, 실제 계정
+    생성(/auth/oauth/upsert) 전에 존재 여부를 미리 확인하는 용도.
+    """
+    _require_internal_secret(request)
+    if payload.provider not in _EXTERNAL_UPSERT_PROVIDERS:
+        raise HTTPException(status_code=400, detail="지원하지 않는 provider입니다.")
+
+    use_case = _ginny_use_case(db)
+    user = await use_case.find_oauth_user(
+        provider=payload.provider, oauth_id=payload.oauth_id, email=payload.email
+    )
+    return {"exists": user is not None}
+
+
 @ginny_router.post("/auth/oauth/upsert")
 async def upsert_oauth_profile(
     payload: OAuthProfilePayload,
@@ -88,10 +123,7 @@ async def upsert_oauth_profile(
     이 엔드포인트는 브라우저가 아닌 신뢰된 서버(Next.js API route)만 호출해야 하므로
     공유 비밀값(X-Internal-Secret)으로 검증한다.
     """
-    settings = get_settings()
-    provided_secret = request.headers.get("x-internal-secret", "")
-    if not settings.internal_oauth_secret or provided_secret != settings.internal_oauth_secret:
-        raise HTTPException(status_code=401, detail="인증되지 않은 요청입니다.")
+    _require_internal_secret(request)
     if payload.provider not in _EXTERNAL_UPSERT_PROVIDERS:
         raise HTTPException(status_code=400, detail="지원하지 않는 provider입니다.")
 

@@ -77,15 +77,15 @@ async def google_callback(
     cookie_state = request.cookies.get(_STATE_COOKIE)
 
     if error or not code or not state or state != cookie_state:
-        return RedirectResponse(f"{frontend_url}/login?oauth=error")
+        return RedirectResponse(f"{frontend_url}/oauth-complete?oauth=error&provider=google")
 
     use_case = _ginny_use_case(db)
     try:
         await use_case.login_with_google(code)
     except GoogleOAuthError:
-        return RedirectResponse(f"{frontend_url}/login?oauth=error")
+        return RedirectResponse(f"{frontend_url}/oauth-complete?oauth=error&provider=google")
 
-    response = RedirectResponse(f"{frontend_url}/login?oauth=success")
+    response = RedirectResponse(f"{frontend_url}/oauth-complete?oauth=success&provider=google")
     response.delete_cookie(_STATE_COOKIE)
     return response
 

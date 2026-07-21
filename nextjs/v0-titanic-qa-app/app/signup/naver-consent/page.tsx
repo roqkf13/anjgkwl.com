@@ -30,7 +30,7 @@ export default function NaverConsentPage() {
         setError(payload.error ?? "가입 처리에 실패했습니다.");
         return;
       }
-      router.push("/login?oauth=success&provider=naver");
+      router.push("/oauth-complete?oauth=success&provider=naver");
     } catch {
       setError("서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.");
     } finally {
@@ -101,7 +101,7 @@ export default function NaverConsentPage() {
         </button>
 
         <Link
-          href="/login"
+          href="/oauth-complete?oauth=error&provider=naver&reason=cancelled"
           className="block text-center text-sm text-gray-500 dark:text-gray-400 hover:underline"
         >
           취소

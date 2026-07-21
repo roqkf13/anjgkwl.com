@@ -1,17 +1,62 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { FormEvent, Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, Suspense, useCallback, useState } from "react";
 import { LogIn } from "lucide-react";
 
 import { AuthPageShell } from "@/components/auth-page-shell";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { OAUTH_RESULT_STORAGE_KEY, type OAuthResult } from "@/lib/oauth-result";
 
 const apiBaseUrl =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
+
+function openOAuthPopup(url: string, onResult: (result: OAuthResult) => void) {
+  const popup = window.open(url, "oauth-popup", "width=480,height=720");
+  if (!popup) {
+    // 팝업이 차단된 경우: 기존처럼 전체 페이지 이동으로 대체.
+    window.location.href = url;
+    return;
+  }
+
+  let settled = false;
+
+  function cleanup() {
+    window.removeEventListener("storage", handleStorage);
+    window.clearInterval(closeCheckInterval);
+  }
+
+  function handleStorage(e: StorageEvent) {
+    if (e.key !== OAUTH_RESULT_STORAGE_KEY || !e.newValue) return;
+    try {
+      const result = JSON.parse(e.newValue) as OAuthResult;
+      if (Date.now() - result.ts > 30_000) return;
+      settled = true;
+      cleanup();
+      localStorage.removeItem(OAUTH_RESULT_STORAGE_KEY);
+      onResult(result);
+    } catch {
+      // 무시
+    }
+  }
+
+  const closeCheckInterval = window.setInterval(() => {
+    if (popup.closed) {
+      window.clearInterval(closeCheckInterval);
+      // storage 이벤트가 아직 도착 중일 수 있으니 잠깐 기다렸다가 재확인한다.
+      window.setTimeout(() => {
+        if (settled) return;
+        cleanup();
+        onResult({ status: "error", provider: "", reason: "cancelled", ts: Date.now() });
+      }, 300);
+    }
+  }, 500);
+
+  window.addEventListener("storage", handleStorage);
+}
 
 function OAuthStatusNotice() {
   const params = useSearchParams();
@@ -48,7 +93,33 @@ const initialUiState: LoginUiState = {
 };
 
 export default function LoginPage() {
+  const router = useRouter();
   const [ui, setUi] = useState<LoginUiState>(initialUiState);
+  const [oauthError, setOauthError] = useState<string | null>(null);
+  const [oauthPending, setOauthPending] = useState<"google" | "naver" | null>(null);
+
+  const handleOAuthClick = useCallback(
+    (provider: "google" | "naver") => {
+      setOauthError(null);
+      setOauthPending(provider);
+      const url =
+        provider === "google"
+          ? `${apiBaseUrl}/auth/google/login`
+          : "/api/auth/naver/login";
+
+      openOAuthPopup(url, (result) => {
+        setOauthPending(null);
+        if (result.status === "success") {
+          router.push("/");
+          return;
+        }
+        if (result.reason === "cancelled") return;
+        const providerLabel = result.provider === "naver" ? "네이버" : "구글";
+        setOauthError(`${providerLabel} 로그인에 실패했습니다. 다시 시도해 주세요.`);
+      });
+    },
+    [router]
+  );
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -121,10 +192,17 @@ export default function LoginPage() {
       <Suspense fallback={null}>
         <OAuthStatusNotice />
       </Suspense>
+      {oauthError && (
+        <p className="text-sm text-red-600 dark:text-red-400 mb-3" role="alert">
+          {oauthError}
+        </p>
+      )}
 
-      <a
-        href={`${apiBaseUrl}/auth/google/login`}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+      <button
+        type="button"
+        onClick={() => handleOAuthClick("google")}
+        disabled={oauthPending !== null}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden>
           <path
@@ -144,12 +222,14 @@ export default function LoginPage() {
             d="M12 4.76c1.76 0 3.35.6 4.6 1.79l3.44-3.44C17.94 1.19 15.24 0 12 0A12 12 0 0 0 1.44 6.57l4 3.1A7.15 7.15 0 0 1 12 4.76z"
           />
         </svg>
-        구글로 로그인
-      </a>
+        {oauthPending === "google" ? "구글 로그인 진행 중…" : "구글로 로그인"}
+      </button>
 
-      <a
-        href="/api/auth/naver/login"
-        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#03C75A] px-4 py-2 text-sm font-medium text-white hover:bg-[#02b350] transition-colors"
+      <button
+        type="button"
+        onClick={() => handleOAuthClick("naver")}
+        disabled={oauthPending !== null}
+        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#03C75A] px-4 py-2 text-sm font-medium text-white hover:bg-[#02b350] transition-colors disabled:opacity-50"
       >
         <span
           className="flex h-4 w-4 items-center justify-center text-[13px] font-black leading-none"
@@ -157,8 +237,8 @@ export default function LoginPage() {
         >
           N
         </span>
-        네이버로 로그인
-      </a>
+        {oauthPending === "naver" ? "네이버 로그인 진행 중…" : "네이버로 로그인"}
+      </button>
 
       <div className="my-4 flex items-center gap-3">
         <Separator className="flex-1" />

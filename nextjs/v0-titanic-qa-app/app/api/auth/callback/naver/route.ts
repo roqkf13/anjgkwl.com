@@ -9,8 +9,8 @@ const STATE_COOKIE = "naver_oauth_state";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
 
-function redirectToLogin(req: NextRequest, status: "success" | "error", reason?: string) {
-  const url = new URL("/login", req.url);
+function redirectToOAuthComplete(req: NextRequest, status: "success" | "error", reason?: string) {
+  const url = new URL("/oauth-complete", req.url);
   url.searchParams.set("oauth", status);
   url.searchParams.set("provider", "naver");
   if (reason) url.searchParams.set("reason", reason);
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
       hasState: !!state,
       stateMatches: state === cookieState,
     });
-    return redirectToLogin(req, "error", "state_mismatch");
+    return redirectToOAuthComplete(req, "error", "state_mismatch");
   }
 
   const clientId = process.env.NAVER_CLIENT_ID?.trim();
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
       hasRedirectUri: !!redirectUri,
       hasInternalSecret: !!internalSecret,
     });
-    return redirectToLogin(req, "error", "missing_env");
+    return redirectToOAuthComplete(req, "error", "missing_env");
   }
 
   try {
@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
     const tokenJson = (await tokenRes.json()) as { access_token?: string; error?: string; error_description?: string };
     if (!tokenRes.ok || !tokenJson.access_token) {
       console.error("[naver-callback] 토큰 교환 실패", tokenRes.status, tokenJson);
-      return redirectToLogin(req, "error", "token_exchange");
+      return redirectToOAuthComplete(req, "error", "token_exchange");
     }
 
     const profileRes = await fetch(PROFILE_URL, {
@@ -77,14 +77,14 @@ export async function GET(req: NextRequest) {
     const profile = profileJson.response;
     if (!profileRes.ok || profileJson.resultcode !== "00" || !profile?.id) {
       console.error("[naver-callback] 프로필 조회 실패", profileRes.status, profileJson);
-      return redirectToLogin(req, "error", "profile_fetch");
+      return redirectToOAuthComplete(req, "error", "profile_fetch");
     }
 
     const email = (profile.email ?? "").trim().toLowerCase();
     const name = profile.name || profile.nickname || email || profile.id;
     if (!email) {
       console.error("[naver-callback] 이메일 없음", profile);
-      return redirectToLogin(req, "error", "no_email");
+      return redirectToOAuthComplete(req, "error", "no_email");
     }
 
     const lookupRes = await fetch(`${apiBaseUrl}/auth/oauth/lookup`, {
@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
     if (!lookupRes.ok) {
       const lookupBody = await lookupRes.text();
       console.error("[naver-callback] 백엔드 lookup 실패", lookupRes.status, lookupBody);
-      return redirectToLogin(req, "error", "lookup_failed");
+      return redirectToOAuthComplete(req, "error", "lookup_failed");
     }
     const { exists } = (await lookupRes.json()) as { exists: boolean };
 
@@ -139,12 +139,12 @@ export async function GET(req: NextRequest) {
     if (!upsertRes.ok) {
       const upsertBody = await upsertRes.text();
       console.error("[naver-callback] 백엔드 upsert 실패", upsertRes.status, upsertBody);
-      return redirectToLogin(req, "error", "upsert_failed");
+      return redirectToOAuthComplete(req, "error", "upsert_failed");
     }
   } catch (err) {
     console.error("[naver-callback] 예외 발생", err);
-    return redirectToLogin(req, "error", "exception");
+    return redirectToOAuthComplete(req, "error", "exception");
   }
 
-  return redirectToLogin(req, "success");
+  return redirectToOAuthComplete(req, "success");
 }

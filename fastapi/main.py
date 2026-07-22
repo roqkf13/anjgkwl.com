@@ -23,6 +23,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from adapters.db_health_adapter import DatabaseHealthAdapter, get_db_health_adapter
 from core.config import get_settings
+from core.dependencies import RoleChecker
+from core.security import Role
 from core.matrix.chat_router import router as chat_router
 from core.matrix.grid_oracle_database_manager import (
     configure_engine,
@@ -129,7 +131,7 @@ for friday13th_router in friday13th_v1_routers:
 for scout_router in scout_routers:
     app.include_router(scout_router)
 app.include_router(community_router)
-app.include_router(admin_router)
+app.include_router(admin_router, dependencies=[Depends(RoleChecker(Role.ADMIN))])
 app.include_router(name_router, prefix="/api/v1")
 app.include_router(titanic_router)
 app.include_router(vision_router)

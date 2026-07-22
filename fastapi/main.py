@@ -31,7 +31,6 @@ from core.matrix.grid_oracle_database_manager import (
     get_db,
     get_engine,
 )
-from doro.app.doro_director import DoroDirector
 from login.adapter.inbound.api.v1 import friday13th_v1_routers
 from login.adapter.outbound.orm.user_model import Base as Friday13thBase
 from scout.adapter.inbound.api import scout_routers
@@ -44,7 +43,6 @@ from titanic.adapter.inbound.api import titanic_router
 
 AsyncSessionDep = Annotated[AsyncSession, Depends(get_db)]
 DatabaseHealthAdapterDep = Annotated[DatabaseHealthAdapter, Depends(get_db_health_adapter)]
-DoroDirectorDep = Annotated[DoroDirector, Depends(DoroDirector)]
 
 logging.basicConfig(
     level=logging.INFO,
@@ -183,12 +181,6 @@ async def read_db_health(
     adapter: DatabaseHealthAdapterDep,
 ):
     return await adapter.check_neon_now(db)
-
-
-@app.get("/doro/data")
-def read_doro_data(doro: DoroDirectorDep):
-    df = doro.get_data()
-    return df.to_dict(orient="records")
 
 
 if __name__ == "__main__":

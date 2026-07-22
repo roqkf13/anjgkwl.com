@@ -125,9 +125,7 @@ from fastapi.core.database import get_db
 | `titanic` | 타이타닉 승객 ML/데이터 파이프라인 | `app.include_router(titanic_router)` (+ `/api` prefix) |
 | `scout` | 게임 장르 탐색·패치노트 번역 | `scout_routers` (복수 라우터) |
 | `login` | 사용자 인증 (회원가입·로그인) | `friday13th_v1_routers` (복수 라우터) |
-| `doro` | CSV 데이터 리더 | `GET /doro/data` |
 | `adapters` | 공유 어댑터 (`DatabaseHealthAdapter`) | `GET /health/db` |
-| `agora` | (확장 예정) | — |
 | `inception` | (확장 예정) | — |
 | `community` | (확장 예정) | — |
 | `imitation_game` | (확장 예정) | — |

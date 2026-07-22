@@ -12,8 +12,6 @@ Python FastAPI 기반 **모듈러 모놀리식** 서버. 일반 지침은 루트
         login
             │
 scout ── ontology ── titanic
-            │
-           doro
           (...)
 ```
 
@@ -103,7 +101,6 @@ fastapi/
     ├── login/           ← [스포크] 회원/인증
     ├── scout/           ← [스포크] 게임 추천
     ├── titanic/         ← [스포크] Titanic 예측
-    ├── doro/            ← [스포크] 데이터 분석
     └── ...
 ```
 

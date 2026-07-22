@@ -155,7 +155,6 @@ source_modules =
     apps.adapters
     apps.admin
     apps.community
-    apps.doro
     apps.dumb_and_dumber
     apps.login
     apps.imitation_game

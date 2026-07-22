@@ -6,7 +6,6 @@ links:
   - login
   - scout
   - titanic
-  - doro
 ---
 
 # Ontology Hub — Graph·Vector DB 라이프라인 전략

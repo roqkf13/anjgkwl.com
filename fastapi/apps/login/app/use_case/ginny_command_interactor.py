@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import secrets
 
-from friday13th.app.ports.input.ginny_use_case import GinnyUseCase
-from friday13th.app.ports.output.ginny_repository import GinnyRepository
-from friday13th.app.ports.output.google_oauth_port import GoogleOAuthPort
+from login.app.ports.input.ginny_use_case import GinnyUseCase
+from login.app.ports.output.ginny_repository import GinnyRepository
+from login.app.ports.output.google_oauth_port import GoogleOAuthPort
 
 PROVIDER_GOOGLE = "google"
 

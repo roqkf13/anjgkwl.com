@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from friday13th.app.ports.input.pamela_use_case import PamelaUseCase
-from friday13th.app.ports.output.pamela_repository import PamelaRepository
-from friday13th.app.security.password import hash_password
+from login.app.ports.input.pamela_use_case import PamelaUseCase
+from login.app.ports.output.pamela_repository import PamelaRepository
+from login.app.security.password import hash_password
 
 
 class SignupValidationError(Exception):

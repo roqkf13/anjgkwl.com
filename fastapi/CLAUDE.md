@@ -1,4 +1,4 @@
-# abiswallow — 백엔드 프로젝트
+# fastapi — 백엔드 프로젝트
 
 Python FastAPI 기반 **모듈러 모놀리식** 서버. 일반 지침은 루트 `CLAUDE.md` 참조.
 
@@ -9,7 +9,7 @@ Python FastAPI 기반 **모듈러 모놀리식** 서버. 일반 지침은 루트
 `apps/` 안의 모듈들은 **스타 토폴로지** 구조를 따른다.
 
 ```
-        friday13th
+        login
             │
 scout ── ontology ── titanic
             │
@@ -63,7 +63,7 @@ type: hub
 id: ontology
 title: "Ontology Hub"
 links:
-  - friday13th
+  - login
   - scout
   - titanic
 ---
@@ -71,8 +71,8 @@ links:
 # 스포크 노드 예시
 ---
 type: spoke
-id: friday13th
-title: "Friday 13th — 회원/인증"
+id: login
+title: "Login — 회원/인증"
 links:
   - ontology
 ---
@@ -93,14 +93,14 @@ links:
 ## 디렉토리 구조
 
 ```
-abiswallow/
+fastapi/
 ├── main.py              ← FastAPI 앱 진입점, 라우터 등록
 ├── core/                ← 공유 설정, DB 엔진 (matrix/)
 ├── adapters/            ← 공유 어댑터 (DB 헬스 등)
 ├── alembic/             ← DB 마이그레이션
 └── apps/                ← 도메인별 앱 모듈
     ├── ontology/        ← [허브] 전역 온톨로지 인덱스, 컨텍스트 라우팅, 앱 간 오케스트레이션
-    ├── friday13th/      ← [스포크] 회원/인증
+    ├── login/           ← [스포크] 회원/인증
     ├── scout/           ← [스포크] 게임 추천
     ├── titanic/         ← [스포크] Titanic 예측
     ├── doro/            ← [스포크] 데이터 분석
@@ -123,7 +123,7 @@ apps/<name>/
 ## 개발 / 실행
 
 ```bash
-# abiswallow/ 루트에서
+# fastapi/ 루트에서
 uvicorn main:app --reload
 ```
 
@@ -167,3 +167,7 @@ alembic upgrade head
 - DB 모델은 `adapter/outbound/orm/`, 도메인 엔티티는 `domain/entities/`에 분리.
 - 엔드포인트는 `async def` 기본. 동기 처리가 꼭 필요한 경우에만 `def`.
 - 느린 LLM 테스트는 `@pytest.mark.ollama`로 마킹.
+
+## 상세 개발 컨벤션
+
+엔티티/DB 규칙, 네이밍 규칙, ML 데이터 분석 원칙, async/sync 선택 기준 등 세부 컨벤션은 `_docs/CLAUDE.md`에 있다. 관련 작업을 할 때 참고한다.

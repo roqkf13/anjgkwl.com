@@ -5,8 +5,8 @@ from typing import Any
 from sqlalchemy import func, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from friday13th.adapter.outbound.orm.user_model import Friday13thUser
-from friday13th.app.ports.output.pamela_repository import PamelaRepository
+from login.adapter.outbound.orm.user_model import Friday13thUser
+from login.app.ports.output.pamela_repository import PamelaRepository
 
 
 class PamelaPgRepository(PamelaRepository):

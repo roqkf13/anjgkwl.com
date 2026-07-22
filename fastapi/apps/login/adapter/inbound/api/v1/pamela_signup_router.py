@@ -4,14 +4,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from core.matrix.grid_oracle_database_manager import get_db as get_sqlmodel_session
-from friday13th.adapter.inbound.api.schemas.pamela_signup_request import (
+from login.adapter.inbound.api.schemas.pamela_signup_request import (
     SignupRequest,
     SignupResponse,
 )
-from friday13th.adapter.outbound.pg.pamela_pg_repository import PamelaPgRepository
-from friday13th.app.ports.input.pamela_use_case import PamelaUseCase
-from friday13th.app.ports.output.pamela_repository import PamelaRepository
-from friday13th.app.use_case.pamela_command_interactor import (
+from login.adapter.outbound.pg.pamela_pg_repository import PamelaPgRepository
+from login.app.ports.input.pamela_use_case import PamelaUseCase
+from login.app.ports.output.pamela_repository import PamelaRepository
+from login.app.use_case.pamela_command_interactor import (
     DuplicateEmailError,
     PamelaCommandInteractor,
     SignupValidationError,

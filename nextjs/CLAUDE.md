@@ -1,4 +1,4 @@
-# www — 프론트엔드 프로젝트
+# nextjs — 프론트엔드 프로젝트
 
 Next.js 기반 웹 앱. 일반 지침은 루트 `CLAUDE.md` 참조.
 
@@ -13,7 +13,7 @@ Next.js 기반 웹 앱. 일반 지침은 루트 `CLAUDE.md` 참조.
 ## 디렉토리 구조
 
 ```
-www/
+nextjs/
 └── v0-titanic-qa-app/   ← 실제 Next.js 앱 루트
     ├── app/             ← App Router (pages + API routes)
     │   ├── api/gemini/  ← Gemini 채팅 API route
@@ -27,7 +27,7 @@ www/
 ## 개발 / 빌드
 
 ```bash
-# www/ 루트에서 실행
+# nextjs/ 루트에서 실행
 npm run dev        # webpack (안정)
 npm run dev:turbo  # Turbopack (빠름, 실험적)
 npm run build

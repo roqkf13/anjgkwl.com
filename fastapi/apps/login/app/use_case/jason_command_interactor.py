@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from friday13th.app.ports.input.jason_use_case import JasonUseCase
-from friday13th.app.ports.output.jason_repository import JasonRepository
-from friday13th.app.security.password import verify_password
+from login.app.ports.input.jason_use_case import JasonUseCase
+from login.app.ports.output.jason_repository import JasonRepository
+from login.app.security.password import verify_password
 
 
 class InvalidCredentialsError(Exception):

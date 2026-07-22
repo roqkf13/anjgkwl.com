@@ -4,14 +4,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from core.matrix.grid_oracle_database_manager import get_db as get_sqlmodel_session
-from friday13th.adapter.inbound.api.schemas.jason_login_request import (
+from login.adapter.inbound.api.schemas.jason_login_request import (
     LoginRequest,
     LoginResponse,
 )
-from friday13th.adapter.outbound.pg.jason_pg_repository import JasonPgRepository
-from friday13th.app.ports.input.jason_use_case import JasonUseCase
-from friday13th.app.ports.output.jason_repository import JasonRepository
-from friday13th.app.use_case.jason_command_interactor import (
+from login.adapter.outbound.pg.jason_pg_repository import JasonPgRepository
+from login.app.ports.input.jason_use_case import JasonUseCase
+from login.app.ports.output.jason_repository import JasonRepository
+from login.app.use_case.jason_command_interactor import (
     InvalidCredentialsError,
     JasonCommandInteractor,
 )

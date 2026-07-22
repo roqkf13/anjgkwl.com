@@ -20,7 +20,7 @@ MD frontmatter 예시:
   id: ontology
   title: "허브 이름"
   links:
-    - friday13th
+    - login
     - scout
   ---
 """

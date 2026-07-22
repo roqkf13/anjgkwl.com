@@ -7,10 +7,10 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from core.config import get_settings
 from core.matrix.grid_oracle_database_manager import get_db as get_sqlmodel_session
-from friday13th.adapter.outbound.google.google_oauth_client import GoogleOAuthHttpClient
-from friday13th.adapter.outbound.pg.ginny_pg_repository import GinnyPgRepository
-from friday13th.app.ports.input.ginny_use_case import GinnyUseCase
-from friday13th.app.use_case.ginny_command_interactor import (
+from login.adapter.outbound.google.google_oauth_client import GoogleOAuthHttpClient
+from login.adapter.outbound.pg.ginny_pg_repository import GinnyPgRepository
+from login.app.ports.input.ginny_use_case import GinnyUseCase
+from login.app.use_case.ginny_command_interactor import (
     GinnyCommandInteractor,
     GoogleOAuthError,
     OAuthProfileError,

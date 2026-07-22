@@ -5,8 +5,8 @@ from typing import Any
 from sqlalchemy import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from friday13th.adapter.outbound.orm.user_model import Friday13thUser
-from friday13th.app.ports.output.ginny_repository import GinnyRepository
+from login.adapter.outbound.orm.user_model import Friday13thUser
+from login.app.ports.output.ginny_repository import GinnyRepository
 
 
 def _to_dict(row: Friday13thUser) -> dict[str, Any]:

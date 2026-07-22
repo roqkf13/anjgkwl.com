@@ -1,4 +1,4 @@
-"""import-linter wrapper — abiswallow/ 디렉토리에서 lint-imports를 실행한다."""
+"""import-linter wrapper — fastapi/ 디렉토리에서 lint-imports를 실행한다."""
 import subprocess
 import sys
 from pathlib import Path

@@ -32,8 +32,8 @@ from core.matrix.grid_oracle_database_manager import (
     get_engine,
 )
 from doro.app.doro_director import DoroDirector
-from friday13th.adapter.inbound.api.v1 import friday13th_v1_routers
-from friday13th.adapter.outbound.orm.user_model import Base as Friday13thBase
+from login.adapter.inbound.api.v1 import friday13th_v1_routers
+from login.adapter.outbound.orm.user_model import Base as Friday13thBase
 from scout.adapter.inbound.api import scout_routers
 from community.adapter.inbound.api import community_router
 from admin.adapter.inbound.api import admin_router

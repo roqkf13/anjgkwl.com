@@ -11,70 +11,70 @@ repos:
   - repo: local
     hooks:
 
-      # ── Python: abiswallow ────────────────────────────────────────────
+      # ── Python: fastapi ────────────────────────────────────────────
 
       - id: ruff-lint
-        name: "[abiswallow] Ruff — lint"
+        name: "[fastapi] Ruff — lint"
         entry: ruff
-        args: [check, --fix, abiswallow]
+        args: [check, --fix, fastapi]
         language: system
         pass_filenames: false
-        files: ^abiswallow/.*\.py$
+        files: ^fastapi/.*\.py$
 
       - id: ruff-format
-        name: "[abiswallow] Ruff — format"
+        name: "[fastapi] Ruff — format"
         entry: ruff
-        args: [format, abiswallow]
+        args: [format, fastapi]
         language: system
         pass_filenames: false
-        files: ^abiswallow/.*\.py$
+        files: ^fastapi/.*\.py$
 
       - id: mypy
-        name: "[abiswallow] mypy — type check"
+        name: "[fastapi] mypy — type check"
         entry: python
-        args: [-m, mypy, --config-file, abiswallow/pyproject.toml, abiswallow]
+        args: [-m, mypy, --config-file, fastapi/pyproject.toml, fastapi]
         language: system
         pass_filenames: false
-        files: ^abiswallow/.*\.py$
+        files: ^fastapi/.*\.py$
 
       - id: import-linter
-        name: "[abiswallow] import-linter — star topology"
+        name: "[fastapi] import-linter — star topology"
         entry: python
-        args: [abiswallow/scripts/run-lint-imports.py]
+        args: [fastapi/scripts/run-lint-imports.py]
         language: system
         pass_filenames: false
-        files: ^abiswallow/.*\.py$
+        files: ^fastapi/.*\.py$
 
       - id: validate-harness
-        name: "[abiswallow] MD 하네스 검증"
+        name: "[fastapi] MD 하네스 검증"
         entry: python
-        args: [abiswallow/scripts/validate-harness.py]
+        args: [fastapi/scripts/validate-harness.py]
         language: system
         pass_filenames: false
         files: \.md$
 
-      # ── Next.js: www ──────────────────────────────────────────────────
+      # ── Next.js: nextjs ──────────────────────────────────────────────────
 
       - id: next-lint
-        name: "[www] ESLint"
+        name: "[nextjs] ESLint"
         entry: pnpm
-        args: [--dir, www/v0-titanic-qa-app, lint]
+        args: [--dir, nextjs/v0-titanic-qa-app, lint]
         language: system
         pass_filenames: false
-        files: ^www/.*\.(ts|tsx|js|jsx)$
+        files: ^nextjs/.*\.(ts|tsx|js|jsx)$
 
       - id: next-typecheck
-        name: "[www] TypeScript — type check"
+        name: "[nextjs] TypeScript — type check"
         entry: pnpm
-        args: [--dir, www/v0-titanic-qa-app, type-check]
+        args: [--dir, nextjs/v0-titanic-qa-app, type-check]
         language: system
         pass_filenames: false
-        files: ^www/.*\.(ts|tsx)$
+        files: ^nextjs/.*\.(ts|tsx)$
 
       - id: next-format-check
-        name: "[www] Prettier — format check"
+        name: "[nextjs] Prettier — format check"
         entry: pnpm
-        args: [--dir, www/v0-titanic-qa-app, format:check]
+        args: [--dir, nextjs/v0-titanic-qa-app, format:check]
         language: system
         pass_filenames: false
-        files: ^www/.*\.(ts|tsx|js|jsx|json|css)$
+        files: ^nextjs/.*\.(ts|tsx|js|jsx|json|css)$

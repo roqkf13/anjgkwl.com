@@ -1,9 +1,9 @@
 [submodule "backend"]
-	path = abiswallow
+	path = fastapi
 	url = https://github.com/roqkf13/com.anjgkwl.api.git
 [submodule "docs"]
 	path = vault
 	url = https://github.com/roqkf13/com.anjgkwl.docs.git
 [submodule "frontend"]
-	path = www
+	path = nextjs
 	url = https://github.com/roqkf13/com.anjgkwl.www.git

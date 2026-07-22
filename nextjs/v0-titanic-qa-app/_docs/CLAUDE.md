@@ -1,14 +1,14 @@
-# Frontend (www) 지침
+# Frontend (nextjs) 지침
 
 ## 프로젝트 개요
 
 - **런타임**: Node.js, Next.js 15 (App Router), TypeScript
-- **실제 앱 경로**: `www/v0-titanic-qa-app/`
+- **실제 앱 경로**: `nextjs/v0-titanic-qa-app/`
 - **포트**: 3000
 - **UI 라이브러리**: shadcn/ui + Radix UI + Tailwind CSS
 - **폰트**: Geist, Geist Mono (Google Fonts)
 - **분석**: Vercel Analytics (`@vercel/analytics/next`)
-- **백엔드 연동**: Docker Compose 내부망 → abiswallow (포트 8000)
+- **백엔드 연동**: Docker Compose 내부망 → fastapi (포트 8000)
 - **패키지 매니저**: pnpm (`pnpm-lock.yaml`)
 
 ---
@@ -16,7 +16,7 @@
 ## 디렉터리 구조
 
 ```
-www/
+nextjs/
 └── v0-titanic-qa-app/
     ├── app/                        # Next.js App Router 루트
     │   ├── api/
@@ -77,8 +77,8 @@ www/
 | 경로 | 설명 |
 |------|------|
 | `/` | 홈 |
-| `/login` | 로그인 (`friday13th` 백엔드) |
-| `/signup` | 회원가입 (`friday13th` 백엔드) |
+| `/login` | 로그인 (`login` 백엔드) |
+| `/signup` | 회원가입 (`login` 백엔드) |
 | `/chat` | Gemini 채팅 (`/api/gemini` Route Handler 경유) |
 | `/lesson` | 레슨 레이아웃 |
 | `/lesson/titanic` | 타이타닉 레슨 |
@@ -164,7 +164,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 ## 개발 서버 실행
 
 ```bash
-# www/ 루트에서
+# nextjs/ 루트에서
 npm run dev        # webpack 모드 (포트 3000)
 npm run dev:turbo  # turbopack 모드
 ```

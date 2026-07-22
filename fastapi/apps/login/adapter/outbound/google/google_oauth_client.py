@@ -4,7 +4,7 @@ from urllib.parse import urlencode
 
 import httpx
 
-from friday13th.app.ports.output.google_oauth_port import GoogleOAuthPort
+from login.app.ports.output.google_oauth_port import GoogleOAuthPort
 
 AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 TOKEN_URL = "https://oauth2.googleapis.com/token"

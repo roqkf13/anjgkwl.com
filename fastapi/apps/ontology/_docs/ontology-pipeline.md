@@ -3,7 +3,7 @@ type: hub
 id: ontology
 title: "Ontology Hub — Graph·Vector DB 라이프라인 전략"
 links:
-  - friday13th
+  - login
   - scout
   - titanic
   - doro
@@ -65,7 +65,7 @@ volumes:
   n8n_data:   # 기존
 ```
 
-환경변수 (`abiswallow/.env`):
+환경변수 (`fastapi/.env`):
 
 ```dotenv
 NEO4J_URI=bolt://neo4j:7687
@@ -188,7 +188,7 @@ qdrant-client>=1.9  # AsyncQdrantClient
 ## 7. 구현 순서 (체크리스트)
 
 - [ ] `docker-compose.yaml` — neo4j, qdrant 서비스 추가 및 볼륨 선언
-- [ ] `abiswallow/.env` — 4개 환경변수 추가
+- [ ] `fastapi/.env` — 4개 환경변수 추가
 - [ ] `adapter/outbound/graph/neo4j_client.py` — 드라이버 싱글턴
 - [ ] `adapter/outbound/graph/graph_repository.py` — upsert_node / upsert_edge / query 구현
 - [ ] `adapter/outbound/vector/qdrant_client.py` — 클라이언트 싱글턴

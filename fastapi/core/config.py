@@ -51,6 +51,37 @@ class Settings(BaseModel):
     docs_password: str = Field(
         default_factory=lambda: os.getenv("DOCS_PASSWORD", "").strip()
     )
+    redis_url: str = Field(
+        default_factory=lambda: os.getenv("REDIS_URL", "redis://localhost:6379").strip()
+    )
+    service_aud: str = Field(
+        default_factory=lambda: os.getenv("SERVICE_AUD", "anjgkwl-api").strip()
+    )
+    jwt_private_key_b64: str = Field(
+        default_factory=lambda: os.getenv("JWT_PRIVATE_KEY_B64", "").strip()
+    )
+    jwt_public_key_b64: str = Field(
+        default_factory=lambda: os.getenv("JWT_PUBLIC_KEY_B64", "").strip()
+    )
+    jwt_kid: str = Field(
+        default_factory=lambda: os.getenv("JWT_KID", "auth-key-1").strip()
+    )
+    auth_google_redirect_uri: str = Field(
+        default_factory=lambda: os.getenv(
+            "AUTH_GOOGLE_REDIRECT_URI", "http://127.0.0.1:9000/callback/google"
+        ).strip()
+    )
+    auth_naver_client_id: str = Field(
+        default_factory=lambda: os.getenv("NAVER_CLIENT_ID", "").strip()
+    )
+    auth_naver_client_secret: str = Field(
+        default_factory=lambda: os.getenv("NAVER_CLIENT_SECRET", "").strip()
+    )
+    auth_naver_redirect_uri: str = Field(
+        default_factory=lambda: os.getenv(
+            "AUTH_NAVER_REDIRECT_URI", "http://127.0.0.1:9000/callback/naver"
+        ).strip()
+    )
 
 
 @lru_cache

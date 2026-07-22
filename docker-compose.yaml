@@ -27,6 +27,25 @@ services:
       neo4j:
         condition: service_healthy
 
+  # 1-2. 인증 게이트웨이 (auth.anjgkwl.com 전용, JWT 발급/검증)
+  auth:
+    build:
+      context: ./fastapi
+    command: uvicorn auth_main:app --host 0.0.0.0 --port 9000
+    restart: unless-stopped
+    volumes:
+      - ./fastapi:/app
+    env_file:
+      - ./fastapi/.env.auth   # JWT_PRIVATE_KEY_B64, GOOGLE/NAVER client secret 등
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgvector:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      pgvector:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
   # 2. n8n 워크플로우 자동화 서비스
   n8n:
     image: n8nio/n8n

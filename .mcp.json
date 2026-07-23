@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "hermes": {
+      "type": "stdio",
+      "command": "wsl.exe",
+      "args": ["-d", "Ubuntu-26.04", "--", "bash", "-lc", "hermes mcp serve"],
+      "env": {}
+    }
+  }
+}

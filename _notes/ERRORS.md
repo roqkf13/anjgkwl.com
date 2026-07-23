@@ -44,6 +44,9 @@
 **증상:** `.wslconfig`에 `networkingMode=mirrored` 설정하고 `wsl --shutdown` 해도 WSL→Windows localhost 연결이 계속 실패.
 **원인:** 미러링 모드는 **Windows 11 22H2 이상 전용** 기능. Windows 10에서는 설정해도 에러 없이 그냥 무시됨.
 **해결:** NAT 모드 전제로 별도 우회(`OLLAMA_HOST=0.0.0.0` + 방화벽 규칙 + WSL에서 게이트웨이 IP로 접속)로 전환. 자세한 절차는 로컬 메모리 `reference_hermes_ollama_wsl_setup.md` 참고.
+**계속 참일 것들 (재발 방지용):**
+- `OLLAMA_HOST` 환경변수를 설정해도 **이미 떠 있던 Ollama 앱은 반영 안 됨** — 트레이에서 완전히 종료 후 재실행해야 함.
+- WSL에서 접속하는 호스트 IP(`ip route show default | awk '{print $3}'`로 확인)는 **`wsl --shutdown` 후 바뀔 수 있음** — 연결 안 되면 이 값부터 재확인.
 
 ### Windows 방화벽 — 명시적 Allow 규칙을 만들어도 계속 막힘
 **증상:** `New-NetFirewallRule ... -Action Allow`로 11434 포트를 열어줬는데도 WSL에서 접속 시 타임아웃(연결 거부가 아니라 무응답).
